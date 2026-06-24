@@ -1148,6 +1148,15 @@ main {
     height: 1.2em;
 }
 
+/* Іконки всередині кнопок */
+.btn-primary .icon {
+    background-color: var(--bg-primary);
+}
+
+.btn-secondary .icon {
+    background-color: var(--accent);
+}
+
 /* Посилання на картках проєктів */
 .project-link {
     display: inline-flex;

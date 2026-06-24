@@ -176,6 +176,47 @@
         "images/projects/Rainbow/5.png"
       ],
       "features": []
+    },
+    {
+      "id": 1782309995166,
+      "features": [],
+      "featured": false,
+      "status": "completed",
+      "category": "games",
+      "icon": "game",
+      "github": "https://github.com/s1spa/LC_EventsMod",
+      "download": "https://thunderstore.io/c/lethal-company/p/s1spa/Chaos_Events/",
+      "mainImage": "images/projects/LCChaosMod/s1spa-Chaos_Events-1.1.2.png",
+      "title": {
+        "uk": "LC Chaos Mod",
+        "en": "LC Chaos Mod",
+        "pl": "LC Chaos Mod",
+        "de": "LC Chaos Mod"
+      },
+      "shortDescription": {
+        "uk": "Мод для Lethal Company, що вносить хаос у кожну місію - 13 випадкових подій від дощу з мін до телепортації гравців, з мережевою синхронізацією та налаштуванням через термінал гри.",
+        "en": "A Lethal Company mod that injects chaos into every mission - 13 random events from mine rain to player teleportation, with full network sync and in-game terminal settings.",
+        "pl": "A Lethal Company mod that injects chaos into every mission - 13 random events from mine rain to player teleportation, with full network sync and in-game terminal settings.",
+        "de": "A Lethal Company mod that injects chaos into every mission - 13 random events from mine rain to player teleportation, with full network sync and in-game terminal settings."
+      },
+      "description": {
+        "uk": "LC: Chaos Events — мод для Lethal Company, що додає систему випадкових подій під час вилазок на місяці.\n\nКожна місія може \"зламатись\" у будь-який момент. Гравці отримують попередження та відлік часу — а далі відбувається одна з 13 подій. Корабель — повна безпечна зона, жодна подія там не спрацює.\n\nПодії діляться на три типи:\n\nНебезпечні — безпосередньо загрожують команді: з нізвідки падають міни, з'являються турелі або спавняться додаткові монстри посеред локації.\n\nХаотичні — ламають звичний порядок речей: гравців телепортує в інші частини рівня або міняє місцями один з одним, а всі предмети на землі раптово перетворюються на футбольні м'ячі з повноцінною фізикою.\n\nПсихологічні — грають на нервах: термінал показує фейкові критичні повідомлення від компанії, гравці різко змінюються в розмірі, голос у рації звучить не так, ефекти параної дезорієнтують команду.\n\nКожна подія синхронізується по мережі через RPC-виклики — всі бачать одне й те саме одночасно, незалежно від того, хто є хостом. Налаштування вбудовані прямо в термінал гри в стилі ретро-інтерфейсу: можна вимкнути будь-яку подію окремо, змінити частоту появи та інтенсивність ефектів. Інтерфейс підтримує українську та англійську мови.\n\nТехнічний стек: C#, BepInEx, LethalLib, Unity UGUI.\n",
+        "en": "LC: Chaos Events is a mod for Lethal Company that adds a random event system to expeditions on the moons.\n\nAt any point during a mission, things can go wrong. Players receive a warning and a countdown — then one of 13 events fires. The ship is a full safe zone; no event can trigger while the crew is on board.\n\nEvents fall into three categories:\n\nHazardous — direct threats to the crew: mines start falling from the sky, turrets appear mid-dungeon, or additional monsters spawn around the location.\n\nChaotic — break the normal flow: players get teleported to random parts of the level or swapped with each other, and all items on the ground suddenly transform into soccer balls with full physics simulation.\n\nPsychological — mess with the team's heads: the terminal displays fake critical messages from the Company, players abruptly change size, voice comms sound off, and paranoia effects disorient the crew.\n\nAll events are network-synchronized via RPC calls — everyone sees the same thing at the same time regardless of who is hosting. Settings are built directly into the game's terminal using its retro UI style: toggle any individual event, adjust spawn frequency and effect intensity. The interface supports both Ukrainian and English.\n\nTech stack: C#, BepInEx, LethalLib, Unity UGUI.\n",
+        "pl": "LC: Chaos Events is a mod for Lethal Company that adds a random event system to expeditions on the moons.\n\nAt any point during a mission, things can go wrong. Players receive a warning and a countdown — then one of 13 events fires. The ship is a full safe zone; no event can trigger while the crew is on board.\n\nEvents fall into three categories:\n\nHazardous — direct threats to the crew: mines start falling from the sky, turrets appear mid-dungeon, or additional monsters spawn around the location.\n\nChaotic — break the normal flow: players get teleported to random parts of the level or swapped with each other, and all items on the ground suddenly transform into soccer balls with full physics simulation.\n\nPsychological — mess with the team's heads: the terminal displays fake critical messages from the Company, players abruptly change size, voice comms sound off, and paranoia effects disorient the crew.\n\nAll events are network-synchronized via RPC calls — everyone sees the same thing at the same time regardless of who is hosting. Settings are built directly into the game's terminal using its retro UI style: toggle any individual event, adjust spawn frequency and effect intensity. The interface supports both Ukrainian and English.\n\nTech stack: C#, BepInEx, LethalLib, Unity UGUI.\n",
+        "de": "LC: Chaos Events is a mod for Lethal Company that adds a random event system to expeditions on the moons.\n\nAt any point during a mission, things can go wrong. Players receive a warning and a countdown — then one of 13 events fires. The ship is a full safe zone; no event can trigger while the crew is on board.\n\nEvents fall into three categories:\n\nHazardous — direct threats to the crew: mines start falling from the sky, turrets appear mid-dungeon, or additional monsters spawn around the location.\n\nChaotic — break the normal flow: players get teleported to random parts of the level or swapped with each other, and all items on the ground suddenly transform into soccer balls with full physics simulation.\n\nPsychological — mess with the team's heads: the terminal displays fake critical messages from the Company, players abruptly change size, voice comms sound off, and paranoia effects disorient the crew.\n\nAll events are network-synchronized via RPC calls — everyone sees the same thing at the same time regardless of who is hosting. Settings are built directly into the game's terminal using its retro UI style: toggle any individual event, adjust spawn frequency and effect intensity. The interface supports both Ukrainian and English.\n\nTech stack: C#, BepInEx, LethalLib, Unity UGUI.\n"
+      },
+      "technologies": [
+        "C#",
+        "BepInEx",
+        "LethalLib",
+        "Unity UGUI"
+      ],
+      "videos": [],
+      "gallery": [
+        "images/projects/LCChaosMod/image.png",
+        "images/projects/LCChaosMod/зображення_2026-06-24_170536220.png",
+        "images/projects/LCChaosMod/imag2e.png"
+      ]
     }
   ]
 }

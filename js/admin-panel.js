@@ -1,17 +1,224 @@
 // ============================================================================
-// ADMIN-PANEL.JS - Логіка адмін-панелі
+// ADMIN-PANEL.JS
 // ============================================================================
 
 // Глобальні змінні
 let projectsData = { projects: [] };
 let editingProjectId = null;
-let aboutData = {
-    profile: {},
-    skills: {},
-    education: [],
-    goals: {},
-    contacts: {}
-};
+let aboutData = { profile: {}, skills: {}, education: [], goals: {}, contacts: {} };
+
+// ============================================================================
+// FILE SYSTEM ACCESS API — пряме збереження в папку проєкту
+// ============================================================================
+
+// projectDirHandle встановлюється ТІЛЬКИ через connectFolder() (явний клік)
+// або через tryRestoreDirHandle() при завантаженні (тихо, без діалогів)
+let projectDirHandle = null;
+
+function openDB() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open('portfolioAdmin', 1);
+        req.onupgradeneeded = e => e.target.result.createObjectStore('handles');
+        req.onsuccess = e => resolve(e.target.result);
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function storeDirHandle(handle) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('handles', 'readwrite');
+        tx.objectStore('handles').put(handle, 'projectDir');
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+    });
+}
+
+async function getStoredDirHandle() {
+    const db = await openDB();
+    return new Promise(resolve => {
+        const tx = db.transaction('handles', 'readonly');
+        const req = tx.objectStore('handles').get('projectDir');
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => resolve(null);
+    });
+}
+
+// Викликається при завантаженні сторінки.
+// queryPermission НЕ потребує user gesture — тихо перевіряємо чи є доступ.
+async function tryRestoreDirHandle() {
+    if (!window.showDirectoryPicker) return;
+    try {
+        const stored = await getStoredDirHandle();
+        if (!stored) return;
+        const perm = await stored.queryPermission({ mode: 'readwrite' });
+        if (perm === 'granted') {
+            projectDirHandle = stored;
+            updateDirStatus();
+        }
+        // perm === 'prompt' — дозвіл є але потребує підтвердження,
+        // буде запитано при наступному connectFolder() через requestPermission
+    } catch (_) {}
+}
+
+// Викликається ТІЛЬКИ по кнопці — user gesture гарантований
+async function connectFolder() {
+    if (!window.showDirectoryPicker) {
+        showAlert('error', '❌ Твій браузер не підтримує цю функцію. Потрібен Chrome або Edge.');
+        return;
+    }
+    try {
+        // Якщо є збережений handle — спершу просимо дозвіл на нього (менш інвазивно)
+        const stored = await getStoredDirHandle();
+        if (stored) {
+            const perm = await stored.requestPermission({ mode: 'readwrite' });
+            if (perm === 'granted') {
+                projectDirHandle = stored;
+                updateDirStatus();
+                showAlert('success', `✅ Папка "${stored.name}" підключена!`);
+                return;
+            }
+        }
+        // Інакше — відкриваємо picker
+        const handle = await window.showDirectoryPicker({ id: 'portfolioProject', mode: 'readwrite' });
+        projectDirHandle = handle;
+        await storeDirHandle(handle);
+        updateDirStatus();
+        showAlert('success', `✅ Папка "${handle.name}" підключена! Тепер зміни зберігаються автоматично.`);
+    } catch (e) {
+        if (e.name !== 'AbortError') showAlert('error', '❌ Не вдалось підключити папку: ' + e.message);
+    }
+}
+
+function updateDirStatus() {
+    const label = document.getElementById('dir-status-label');
+    if (!label) return;
+    if (projectDirHandle) {
+        label.textContent = `✅ Папка "${projectDirHandle.name}" підключена — зміни зберігаються автоматично`;
+        label.className = 'dir-status-label connected';
+    } else {
+        label.textContent = '📁 Папка не підключена — зміни зберігаються тільки в браузері';
+        label.className = 'dir-status-label disconnected';
+    }
+}
+
+// Записує projectsData у файл. НЕ показує picker — тільки пише якщо handle є.
+async function trySaveProjectsToFile() {
+    if (!projectDirHandle) return false;
+    try {
+        const perm = await projectDirHandle.queryPermission({ mode: 'readwrite' });
+        if (perm !== 'granted') return false;
+        const dataDir = await projectDirHandle.getDirectoryHandle('data');
+        const fileHandle = await dataDir.getFileHandle('projects.json');
+        const writable = await fileHandle.createWritable();
+        await writable.write(JSON.stringify(projectsData, null, 2));
+        await writable.close();
+        return true;
+    } catch (e) {
+        console.warn('FS write failed:', e.message);
+        return false;
+    }
+}
+
+function sanitizeTitle(title) {
+    return (title || 'Project').replace(/\s+/g, '').replace(/[^a-zA-Z0-9а-яА-ЯіІїЇєЄ_-]/g, '') || 'Project';
+}
+
+async function copyImageFile(file, projectTitle) {
+    if (!projectDirHandle) throw new Error('no-dir');
+    const folderName = sanitizeTitle(projectTitle);
+    const imagesDir = await projectDirHandle.getDirectoryHandle('images', { create: true });
+    const projectsDir = await imagesDir.getDirectoryHandle('projects', { create: true });
+    const projectImgDir = await projectsDir.getDirectoryHandle(folderName, { create: true });
+    const fileHandle = await projectImgDir.getFileHandle(file.name, { create: true });
+    const writable = await fileHandle.createWritable();
+    await writable.write(file);
+    await writable.close();
+    return `images/projects/${folderName}/${file.name}`;
+}
+
+// ============================================================================
+// СТАН ЗОБРАЖЕНЬ В МОДАЛЦІ
+// ============================================================================
+
+let mainImageState = { path: '', file: null, blobUrl: null };
+let galleryItems = []; // { path, file, blobUrl }
+
+function initEditState(project) {
+    // Звільнити попередні blob URLs
+    if (mainImageState.file) URL.revokeObjectURL(mainImageState.blobUrl);
+    galleryItems.filter(i => i.file).forEach(i => URL.revokeObjectURL(i.blobUrl));
+
+    if (project) {
+        mainImageState = { path: project.mainImage || '', file: null, blobUrl: project.mainImage || null };
+        galleryItems = (project.gallery || []).map(p => ({ path: p, file: null, blobUrl: p }));
+    } else {
+        mainImageState = { path: '', file: null, blobUrl: null };
+        galleryItems = [];
+    }
+
+    renderMainImagePreview();
+    renderGalleryGrid();
+}
+
+function renderMainImagePreview() {
+    const box = document.getElementById('main-image-preview');
+    if (!box) return;
+    if (mainImageState.blobUrl) {
+        box.innerHTML = `
+            <div class="preview-item">
+                <img src="${mainImageState.blobUrl}" alt="main">
+                <button type="button" class="remove-img-btn" onclick="removeMainImage()">✕</button>
+            </div>`;
+    } else {
+        box.innerHTML = '<span class="preview-empty">Немає зображення</span>';
+    }
+}
+
+function removeMainImage() {
+    if (mainImageState.file) URL.revokeObjectURL(mainImageState.blobUrl);
+    mainImageState = { path: '', file: null, blobUrl: null };
+    renderMainImagePreview();
+}
+
+function handleMainImageSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (mainImageState.file) URL.revokeObjectURL(mainImageState.blobUrl);
+    mainImageState = { path: '', file, blobUrl: URL.createObjectURL(file) };
+    renderMainImagePreview();
+    event.target.value = '';
+}
+
+function renderGalleryGrid() {
+    const grid = document.getElementById('gallery-grid');
+    if (!grid) return;
+    if (galleryItems.length === 0) {
+        grid.innerHTML = '<span class="preview-empty">Немає зображень</span>';
+        return;
+    }
+    grid.innerHTML = galleryItems.map((item, i) => `
+        <div class="preview-item">
+            <img src="${item.blobUrl}" alt="gallery ${i}">
+            <button type="button" class="remove-img-btn" onclick="removeGalleryItem(${i})">✕</button>
+        </div>
+    `).join('');
+}
+
+function removeGalleryItem(index) {
+    const item = galleryItems[index];
+    if (item.file) URL.revokeObjectURL(item.blobUrl);
+    galleryItems.splice(index, 1);
+    renderGalleryGrid();
+}
+
+function handleGalleryAdd(event) {
+    Array.from(event.target.files).forEach(file => {
+        galleryItems.push({ path: '', file, blobUrl: URL.createObjectURL(file) });
+    });
+    renderGalleryGrid();
+    event.target.value = '';
+}
 
 // ============================================================================
 // НАВІГАЦІЯ
@@ -19,17 +226,19 @@ let aboutData = {
 
 function selectFile(fileType) {
     document.getElementById('file-selector').style.display = 'none';
-    
+
     if (fileType === 'projects') {
         document.getElementById('projects-editor').classList.add('active');
         loadProjectsFromLocalStorage();
         renderProjectsList();
         updateProjectsExport();
+        fetchProjectsFromServer();
     } else if (fileType === 'about') {
         document.getElementById('about-editor').classList.add('active');
         loadAboutFromLocalStorage();
         renderAboutPreview();
         updateAboutExport();
+        fetchAboutFromServer();
     }
 }
 
@@ -40,25 +249,34 @@ function backToSelector() {
 }
 
 // ============================================================================
-// PROJECTS - ЗАВАНТАЖЕННЯ
+// PROJECTS — ЗАВАНТАЖЕННЯ
 // ============================================================================
+
+async function fetchProjectsFromServer() {
+    try {
+        const response = await fetch('data/projects.json');
+        if (!response.ok) return;
+        const data = await response.json();
+        projectsData = data;
+        localStorage.setItem('portfolioProjects', JSON.stringify(projectsData));
+        renderProjectsList();
+        updateProjectsExport();
+    } catch (_) {}
+}
 
 function loadProjectsFile(event) {
     const file = event.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = e => {
         try {
-            const data = JSON.parse(e.target.result);
-            projectsData = data;
+            projectsData = JSON.parse(e.target.result);
             localStorage.setItem('portfolioProjects', JSON.stringify(projectsData));
             renderProjectsList();
             updateProjectsExport();
             showAlert('success', '✅ Файл projects.json завантажено!');
-        } catch (error) {
-            showAlert('error', '❌ Помилка: невірний формат JSON');
-            console.error(error);
+        } catch (_) {
+            showAlert('error', '❌ Невірний формат JSON');
         }
     };
     reader.readAsText(file);
@@ -67,16 +285,12 @@ function loadProjectsFile(event) {
 function loadProjectsFromLocalStorage() {
     const saved = localStorage.getItem('portfolioProjects');
     if (saved) {
-        try {
-            projectsData = JSON.parse(saved);
-        } catch (error) {
-            console.error('Помилка читання localStorage:', error);
-        }
+        try { projectsData = JSON.parse(saved); } catch (_) {}
     }
 }
 
 function resetProjects() {
-    if (confirm('⚠️ Видалити ВСІ проєкти? Це незворотна дія!')) {
+    if (confirm('⚠️ Видалити ВСІ проєкти?')) {
         projectsData = { projects: [] };
         localStorage.setItem('portfolioProjects', JSON.stringify(projectsData));
         renderProjectsList();
@@ -86,25 +300,34 @@ function resetProjects() {
 }
 
 // ============================================================================
-// ABOUT - ЗАВАНТАЖЕННЯ
+// ABOUT — ЗАВАНТАЖЕННЯ
 // ============================================================================
+
+async function fetchAboutFromServer() {
+    try {
+        const response = await fetch('data/about.json');
+        if (!response.ok) return;
+        const data = await response.json();
+        aboutData = data;
+        localStorage.setItem('portfolioAbout', JSON.stringify(aboutData));
+        renderAboutPreview();
+        updateAboutExport();
+    } catch (_) {}
+}
 
 function loadAboutFile(event) {
     const file = event.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = e => {
         try {
-            const data = JSON.parse(e.target.result);
-            aboutData = data;
+            aboutData = JSON.parse(e.target.result);
             localStorage.setItem('portfolioAbout', JSON.stringify(aboutData));
             renderAboutPreview();
             updateAboutExport();
             showAlert('success', '✅ Файл about.json завантажено!');
-        } catch (error) {
-            showAlert('error', '❌ Помилка: невірний формат JSON');
-            console.error(error);
+        } catch (_) {
+            showAlert('error', '❌ Невірний формат JSON');
         }
     };
     reader.readAsText(file);
@@ -113,23 +336,13 @@ function loadAboutFile(event) {
 function loadAboutFromLocalStorage() {
     const saved = localStorage.getItem('portfolioAbout');
     if (saved) {
-        try {
-            aboutData = JSON.parse(saved);
-        } catch (error) {
-            console.error('Помилка читання localStorage:', error);
-        }
+        try { aboutData = JSON.parse(saved); } catch (_) {}
     }
 }
 
 function resetAbout() {
-    if (confirm('⚠️ Видалити ВСІ дані профілю? Це незворотна дія!')) {
-        aboutData = {
-            profile: {},
-            skills: {},
-            education: [],
-            goals: {},
-            contacts: {}
-        };
+    if (confirm('⚠️ Видалити ВСІ дані профілю?')) {
+        aboutData = { profile: {}, skills: {}, education: [], goals: {}, contacts: {} };
         localStorage.setItem('portfolioAbout', JSON.stringify(aboutData));
         renderAboutPreview();
         updateAboutExport();
@@ -142,137 +355,109 @@ function resetAbout() {
 // ============================================================================
 
 function switchProjectTab(tab) {
-    document.querySelectorAll('#projects-editor .tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('#projects-editor .tab-content').forEach(content => content.classList.remove('active'));
-    
+    document.querySelectorAll('#projects-editor .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#projects-editor .tab-content').forEach(c => c.classList.remove('active'));
     event.target.classList.add('active');
     document.getElementById(`projects-${tab}-tab`).classList.add('active');
-    
-    if (tab === 'export') {
-        updateProjectsExport();
-    }
+    if (tab === 'export') updateProjectsExport();
 }
 
 function switchAboutTab(tab) {
-    document.querySelectorAll('#about-editor .tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('#about-editor .tab-content').forEach(content => content.classList.remove('active'));
-    
+    document.querySelectorAll('#about-editor .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#about-editor .tab-content').forEach(c => c.classList.remove('active'));
     event.target.classList.add('active');
     document.getElementById(`about-${tab}-tab`).classList.add('active');
-    
-    if (tab === 'export') {
-        updateAboutExport();
-    }
+    if (tab === 'export') updateAboutExport();
 }
 
 // ============================================================================
-// PROJECTS - РЕНДЕРИНГ
+// PROJECTS — РЕНДЕРИНГ
 // ============================================================================
 
 function renderProjectsList() {
     const container = document.getElementById('projects-list');
-    
     if (!projectsData.projects || projectsData.projects.length === 0) {
         container.innerHTML = `
-            <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
-                <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">📂 Поки що немає проєктів</p>
-                <p>Завантажте файл projects.json вище</p>
-            </div>
-        `;
+            <div style="text-align:center;padding:3rem;color:var(--text-secondary);">
+                <p style="font-size:1.2rem;margin-bottom:0.5rem;">📂 Поки що немає проєктів</p>
+                <p>Натисни "Додати проєкт" вище</p>
+            </div>`;
         return;
     }
-
-    container.innerHTML = projectsData.projects.map(project => `
+    container.innerHTML = projectsData.projects.map(p => `
         <div class="project-item">
             <div class="project-info">
-                <h3>${project.emoji || '📁'} ${project.title?.uk || project.title?.en || 'Без назви'}</h3>
-                <p>${project.shortDescription?.uk || project.description?.uk || 'Опис відсутній'}</p>
+                <h3>${p.title?.uk || p.title?.en || 'Без назви'}</h3>
+                <p>${p.shortDescription?.uk || p.description?.uk || 'Опис відсутній'}</p>
                 <div class="project-tags">
-                    ${(project.technologies || []).map(tech => `<span class="tag">${tech}</span>`).join('')}
-                    ${project.featured ? '<span class="tag featured">⭐ Featured</span>' : ''}
-                    ${project.status ? `<span class="tag">${project.status}</span>` : ''}
+                    ${(p.technologies || []).map(t => `<span class="tag">${t}</span>`).join('')}
+                    ${p.featured ? '<span class="tag featured">⭐ Featured</span>' : ''}
+                    ${p.status ? `<span class="tag">${p.status}</span>` : ''}
                 </div>
             </div>
             <div class="project-actions">
-                <button onclick="editProject(${project.id})" class="btn btn-secondary">✏️ Редагувати</button>
-                <button onclick="deleteProject(${project.id})" class="btn btn-danger">🗑️ Видалити</button>
+                <button onclick="editProject(${p.id})" class="btn btn-secondary">✏️ Редагувати</button>
+                <button onclick="deleteProject(${p.id})" class="btn btn-danger">🗑️ Видалити</button>
             </div>
         </div>
     `).join('');
 }
 
-function deleteProject(id) {
-    if (confirm('Видалити цей проєкт?')) {
-        const index = projectsData.projects.findIndex(p => p.id === id);
-        if (index !== -1) {
-            projectsData.projects.splice(index, 1);
-            localStorage.setItem('portfolioProjects', JSON.stringify(projectsData));
-            renderProjectsList();
-            updateProjectsExport();
-            showAlert('success', '🗑️ Проєкт видалено');
-        }
-    }
+async function deleteProject(id) {
+    if (!confirm('Видалити цей проєкт?')) return;
+    const index = projectsData.projects.findIndex(p => p.id === id);
+    if (index === -1) return;
+    projectsData.projects.splice(index, 1);
+    localStorage.setItem('portfolioProjects', JSON.stringify(projectsData));
+    renderProjectsList();
+    updateProjectsExport();
+    const deleted = await trySaveProjectsToFile();
+    showAlert('success', deleted ? '🗑️ Проєкт видалено!' : '🗑️ Видалено (скачай JSON вручну)');
 }
 
 // ============================================================================
-// ABOUT - РЕНДЕРИНГ
+// ABOUT — РЕНДЕРИНГ
 // ============================================================================
 
 function renderAboutPreview() {
     const container = document.getElementById('about-preview');
-    
     if (!aboutData.profile || Object.keys(aboutData.profile).length === 0) {
         container.innerHTML = `
-            <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
-                <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">👤 Немає даних профілю</p>
-                <p>Завантажте файл about.json вище</p>
-            </div>
-        `;
+            <div style="text-align:center;padding:3rem;color:var(--text-secondary);">
+                <p>👤 Немає даних профілю</p>
+            </div>`;
         return;
     }
-
-    const profile = aboutData.profile;
-    const skills = aboutData.skills || {};
-    const education = aboutData.education || [];
-    const goals = aboutData.goals || {};
-    const contacts = aboutData.contacts || {};
-
+    const { profile = {}, skills = {}, education = [], goals = {}, contacts = {} } = aboutData;
     container.innerHTML = `
-        <div style="background: var(--bg-card); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border); margin-bottom: 1rem;">
-            <h4 style="color: var(--accent); margin-bottom: 1rem;">👤 Профіль</h4>
-            <p><strong>Ім'я (UA):</strong> ${profile.name?.uk || 'Не вказано'}</p>
-            <p><strong>Ім'я (EN):</strong> ${profile.name?.en || 'Не вказано'}</p>
-            <p><strong>Вік:</strong> ${profile.age || 'Не вказано'}</p>
+        <div style="background:var(--bg-card);padding:2rem;border-radius:var(--border-radius);border:1px solid var(--border);margin-bottom:1rem;">
+            <h4 style="color:var(--accent);margin-bottom:1rem;">👤 Профіль</h4>
+            <p><strong>Ім'я (UA):</strong> ${profile.name?.uk || '—'}</p>
+            <p><strong>Ім'я (EN):</strong> ${profile.name?.en || '—'}</p>
+            <p><strong>Вік:</strong> ${profile.age || '—'}</p>
             <p><strong>Біо параграфів (UA):</strong> ${profile.bio?.uk?.length || 0}</p>
         </div>
-
-        <div style="background: var(--bg-card); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border); margin-bottom: 1rem;">
-            <h4 style="color: var(--accent); margin-bottom: 1rem;">💻 Навички</h4>
+        <div style="background:var(--bg-card);padding:2rem;border-radius:var(--border-radius);border:1px solid var(--border);margin-bottom:1rem;">
+            <h4 style="color:var(--accent);margin-bottom:1rem;">💻 Навички</h4>
             <p><strong>Категорій:</strong> ${Object.keys(skills).length}</p>
-            ${Object.entries(skills).map(([key, cat]) => `
-                <p style="margin-left: 1rem;">• ${cat.title?.uk || key}: ${cat.items?.length || 0} навичок</p>
-            `).join('')}
+            ${Object.entries(skills).map(([k, c]) => `<p style="margin-left:1rem;">• ${c.title?.uk || k}: ${c.items?.length || 0} навичок</p>`).join('')}
         </div>
-
-        <div style="background: var(--bg-card); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border); margin-bottom: 1rem;">
-            <h4 style="color: var(--accent); margin-bottom: 1rem;">📚 Освіта</h4>
+        <div style="background:var(--bg-card);padding:2rem;border-radius:var(--border-radius);border:1px solid var(--border);margin-bottom:1rem;">
+            <h4 style="color:var(--accent);margin-bottom:1rem;">📚 Освіта</h4>
             <p><strong>Записів:</strong> ${education.length}</p>
         </div>
-
-        <div style="background: var(--bg-card); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border); margin-bottom: 1rem;">
-            <h4 style="color: var(--accent); margin-bottom: 1rem;">🎯 Цілі</h4>
+        <div style="background:var(--bg-card);padding:2rem;border-radius:var(--border-radius);border:1px solid var(--border);margin-bottom:1rem;">
+            <h4 style="color:var(--accent);margin-bottom:1rem;">🎯 Цілі</h4>
             <p><strong>Короткострокова:</strong> ${goals.short?.description?.uk ? '✅' : '❌'}</p>
             <p><strong>Довгострокова:</strong> ${goals.long?.description?.uk ? '✅' : '❌'}</p>
         </div>
-
-        <div style="background: var(--bg-card); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border);">
-            <h4 style="color: var(--accent); margin-bottom: 1rem;">📧 Контакти</h4>
-            <p><strong>Email:</strong> ${contacts.email || 'Не вказано'}</p>
-            <p><strong>Telegram:</strong> ${contacts.telegram || 'Не вказано'}</p>
-            <p><strong>GitHub:</strong> ${contacts.github || 'Не вказано'}</p>
-            <p><strong>LinkedIn:</strong> ${contacts.linkedin || 'Не вказано'}</p>
-        </div>
-    `;
+        <div style="background:var(--bg-card);padding:2rem;border-radius:var(--border-radius);border:1px solid var(--border);">
+            <h4 style="color:var(--accent);margin-bottom:1rem;">📧 Контакти</h4>
+            <p><strong>Email:</strong> ${contacts.email || '—'}</p>
+            <p><strong>Telegram:</strong> ${contacts.telegram || '—'}</p>
+            <p><strong>GitHub:</strong> ${contacts.github || '—'}</p>
+            <p><strong>LinkedIn:</strong> ${contacts.linkedin || '—'}</p>
+        </div>`;
 }
 
 // ============================================================================
@@ -288,34 +473,28 @@ function updateAboutExport() {
 }
 
 function copyProjectsJSON() {
-    const text = JSON.stringify(projectsData, null, 2);
-    navigator.clipboard.writeText(text).then(() => {
-        showAlert('success', '✅ Скопійовано!');
-    });
+    navigator.clipboard.writeText(JSON.stringify(projectsData, null, 2))
+        .then(() => showAlert('success', '✅ Скопійовано!'));
 }
 
 function copyAboutJSON() {
-    const text = JSON.stringify(aboutData, null, 2);
-    navigator.clipboard.writeText(text).then(() => {
-        showAlert('success', '✅ Скопійовано!');
-    });
+    navigator.clipboard.writeText(JSON.stringify(aboutData, null, 2))
+        .then(() => showAlert('success', '✅ Скопійовано!'));
 }
 
 function downloadProjectsJSON() {
-    const dataStr = JSON.stringify(projectsData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(projectsData, null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(dataBlob);
+    link.href = URL.createObjectURL(blob);
     link.download = 'projects.json';
     link.click();
     showAlert('success', '✅ Файл завантажено!');
 }
 
 function downloadAboutJSON() {
-    const dataStr = JSON.stringify(aboutData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(aboutData, null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(dataBlob);
+    link.href = URL.createObjectURL(blob);
     link.download = 'about.json';
     link.click();
     showAlert('success', '✅ Файл завантажено!');
@@ -326,97 +505,124 @@ function downloadAboutJSON() {
 // ============================================================================
 
 function showAlert(type, message) {
-    const existingAlert = document.querySelector('.alert-floating');
-    if (existingAlert) existingAlert.remove();
-
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type} alert-floating`;
-    alert.textContent = message;
-    alert.style.position = 'fixed';
-    alert.style.top = '2rem';
-    alert.style.right = '2rem';
-    alert.style.zIndex = '10000';
-    alert.style.minWidth = '300px';
-    alert.style.animation = 'slideDown 0.3s ease';
-
-    document.body.appendChild(alert);
+    document.querySelector('.alert-floating')?.remove();
+    const el = document.createElement('div');
+    el.className = `alert alert-${type} alert-floating`;
+    el.textContent = message;
+    Object.assign(el.style, { position: 'fixed', top: '2rem', right: '2rem', zIndex: '10000', minWidth: '300px', animation: 'slideDown 0.3s ease' });
+    document.body.appendChild(el);
     setTimeout(() => {
-        alert.style.animation = 'fadeOut 0.3s ease';
-        setTimeout(() => alert.remove(), 300);
+        el.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => el.remove(), 300);
     }, 3000);
 }
 
 // ============================================================================
-// РЕДАГУВАННЯ ПРОЄКТУ
+// РЕДАГУВАННЯ / ДОДАВАННЯ ПРОЄКТУ
 // ============================================================================
+
+function addNewProject() {
+    editingProjectId = 'new';
+    [
+        'edit-title-uk','edit-title-en','edit-title-pl','edit-title-de',
+        'edit-shortDesc-uk','edit-shortDesc-en','edit-shortDesc-pl','edit-shortDesc-de',
+        'edit-desc-uk','edit-desc-en','edit-desc-pl','edit-desc-de',
+        'edit-github','edit-download','edit-technologies','edit-videos',
+    ].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('edit-status').value = 'inProgress';
+    document.getElementById('edit-category').value = 'apps';
+    document.getElementById('edit-icon').value = 'app';
+    document.getElementById('edit-featured').checked = false;
+    document.getElementById('modal-title').textContent = '➕ Новий проєкт';
+    initEditState(null);
+    document.getElementById('edit-project-modal').classList.add('active');
+}
 
 function editProject(id) {
     const project = projectsData.projects.find(p => p.id === id);
     if (!project) return;
     editingProjectId = id;
 
-    // Basic
-    document.getElementById('edit-title-uk').value       = project.title?.uk || '';
-    document.getElementById('edit-title-en').value       = project.title?.en || '';
-    document.getElementById('edit-title-pl').value       = project.title?.pl || '';
-    document.getElementById('edit-title-de').value       = project.title?.de || '';
-    document.getElementById('edit-status').value         = project.status || 'inProgress';
-    document.getElementById('edit-category').value       = project.category || 'apps';
-    document.getElementById('edit-featured').checked     = !!project.featured;
-    document.getElementById('edit-icon').value           = project.icon || '';
-    document.getElementById('edit-github').value         = project.github || '';
-    document.getElementById('edit-download').value       = project.download || '';
-    document.getElementById('edit-mainImage').value      = project.mainImage || '';
+    document.getElementById('edit-title-uk').value     = project.title?.uk || '';
+    document.getElementById('edit-title-en').value     = project.title?.en || '';
+    document.getElementById('edit-title-pl').value     = project.title?.pl || '';
+    document.getElementById('edit-title-de').value     = project.title?.de || '';
+    document.getElementById('edit-status').value       = project.status || 'inProgress';
+    document.getElementById('edit-category').value     = project.category || 'apps';
+    document.getElementById('edit-featured').checked   = !!project.featured;
+    document.getElementById('edit-icon').value         = project.icon || 'app';
+    document.getElementById('edit-github').value       = project.github || '';
+    document.getElementById('edit-download').value     = project.download || '';
 
-    // Short description
-    document.getElementById('edit-shortDesc-uk').value   = project.shortDescription?.uk || '';
-    document.getElementById('edit-shortDesc-en').value   = project.shortDescription?.en || '';
-    document.getElementById('edit-shortDesc-pl').value   = project.shortDescription?.pl || '';
-    document.getElementById('edit-shortDesc-de').value   = project.shortDescription?.de || '';
+    document.getElementById('edit-shortDesc-uk').value = project.shortDescription?.uk || '';
+    document.getElementById('edit-shortDesc-en').value = project.shortDescription?.en || '';
+    document.getElementById('edit-shortDesc-pl').value = project.shortDescription?.pl || '';
+    document.getElementById('edit-shortDesc-de').value = project.shortDescription?.de || '';
 
-    // Description
-    document.getElementById('edit-desc-uk').value        = project.description?.uk || '';
-    document.getElementById('edit-desc-en').value        = project.description?.en || '';
-    document.getElementById('edit-desc-pl').value        = project.description?.pl || '';
-    document.getElementById('edit-desc-de').value        = project.description?.de || '';
+    document.getElementById('edit-desc-uk').value      = project.description?.uk || '';
+    document.getElementById('edit-desc-en').value      = project.description?.en || '';
+    document.getElementById('edit-desc-pl').value      = project.description?.pl || '';
+    document.getElementById('edit-desc-de').value      = project.description?.de || '';
 
-    // Arrays
-    document.getElementById('edit-technologies').value   = (project.technologies || []).join('\n');
-    document.getElementById('edit-videos').value         = (project.videos || []).join('\n');
-    document.getElementById('edit-gallery').value        = (project.gallery || []).join('\n');
+    document.getElementById('edit-technologies').value = (project.technologies || []).join('\n');
+    document.getElementById('edit-videos').value       = (project.videos || []).join('\n');
 
+    document.getElementById('modal-title').textContent = '✏️ Редагування проєкту';
+    initEditState(project);
     document.getElementById('edit-project-modal').classList.add('active');
 }
 
 function closeEditModal() {
     document.getElementById('edit-project-modal').classList.remove('active');
+    document.getElementById('modal-title').textContent = '✏️ Редагування проєкту';
     editingProjectId = null;
+    // Blob URLs очищає initEditState при наступному відкритті
 }
 
-function saveEditProject() {
-    if (!editingProjectId) return;
-    const index = projectsData.projects.findIndex(p => p.id === editingProjectId);
-    if (index === -1) return;
+async function saveEditProject() {
+    const enTitle = document.getElementById('edit-title-en').value.trim();
+    if (!enTitle) { showAlert('error', '❌ Вкажи назву EN'); return; }
 
-    const enTitle    = document.getElementById('edit-title-en').value;
-    const enShort    = document.getElementById('edit-shortDesc-en').value;
-    const enDesc     = document.getElementById('edit-desc-en').value;
-
-    const techRaw    = document.getElementById('edit-technologies').value;
-    const videosRaw  = document.getElementById('edit-videos').value;
-    const galleryRaw = document.getElementById('edit-gallery').value;
-
+    const enShort = document.getElementById('edit-shortDesc-en').value;
+    const enDesc  = document.getElementById('edit-desc-en').value;
     const parseLines = raw => raw.split('\n').map(s => s.trim()).filter(Boolean);
 
-    projectsData.projects[index] = {
-        ...projectsData.projects[index],
-        featured: document.getElementById('edit-featured').checked,
-        status:   document.getElementById('edit-status').value,
-        category: document.getElementById('edit-category').value,
-        icon:     document.getElementById('edit-icon').value,
-        github:   document.getElementById('edit-github').value,
-        download: document.getElementById('edit-download').value,
-        mainImage: document.getElementById('edit-mainImage').value,
+    const isNew = editingProjectId === 'new';
+
+    // Копіювати нові файли зображень, якщо є
+    const hasNewImages = mainImageState.file || galleryItems.some(i => i.file);
+    if (hasNewImages) {
+        if (!projectDirHandle) {
+            showAlert('error', '❌ Спочатку підключи папку проєкту (кнопка "🔗 Підключити папку")');
+            return;
+        }
+        try {
+            if (mainImageState.file) {
+                mainImageState.path = await copyImageFile(mainImageState.file, enTitle);
+                mainImageState.blobUrl = mainImageState.path;
+                mainImageState.file = null;
+            }
+            for (const item of galleryItems) {
+                if (item.file) {
+                    item.path = await copyImageFile(item.file, enTitle);
+                    item.blobUrl = item.path;
+                    item.file = null;
+                }
+            }
+        } catch (e) {
+            showAlert('error', '❌ Помилка копіювання зображень: ' + e.message);
+            return;
+        }
+    }
+
+    const fields = {
+        featured:  document.getElementById('edit-featured').checked,
+        status:    document.getElementById('edit-status').value,
+        category:  document.getElementById('edit-category').value,
+        icon:      document.getElementById('edit-icon').value,
+        github:    document.getElementById('edit-github').value,
+        download:  document.getElementById('edit-download').value,
+        mainImage: mainImageState.path,
         title: {
             uk: document.getElementById('edit-title-uk').value || enTitle,
             en: enTitle,
@@ -435,22 +641,45 @@ function saveEditProject() {
             pl: document.getElementById('edit-desc-pl').value || enDesc,
             de: document.getElementById('edit-desc-de').value || enDesc,
         },
-        technologies: parseLines(techRaw),
-        videos:       parseLines(videosRaw),
-        gallery:      parseLines(galleryRaw),
+        technologies: parseLines(document.getElementById('edit-technologies').value),
+        videos:       parseLines(document.getElementById('edit-videos').value),
+        gallery:      galleryItems.map(i => i.path).filter(Boolean),
     };
+
+    if (isNew) {
+        projectsData.projects.push({ id: Date.now(), features: [], ...fields });
+    } else {
+        const index = projectsData.projects.findIndex(p => p.id === editingProjectId);
+        if (index === -1) return;
+        projectsData.projects[index] = { ...projectsData.projects[index], ...fields };
+    }
 
     localStorage.setItem('portfolioProjects', JSON.stringify(projectsData));
     renderProjectsList();
     updateProjectsExport();
+
+    // Спробувати зберегти прямо у файл
+    const savedToFile = await trySaveProjectsToFile();
+
     closeEditModal();
-    showAlert('success', '✅ Проєкт збережено!');
+    if (savedToFile) {
+        showAlert('success', isNew ? '✅ Проєкт додано!' : '✅ Збережено!');
+    } else {
+        showAlert('warning', isNew ? '✅ Проєкт додано (скачай JSON вручну)' : '✅ Збережено в браузері (скачай JSON вручну)');
+    }
 }
 
 // ============================================================================
 // ІНІЦІАЛІЗАЦІЯ
 // ============================================================================
 
-window.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ Адмін-панель завантажено');
+window.addEventListener('DOMContentLoaded', async () => {
+    if (!window.showDirectoryPicker) {
+        const label = document.getElementById('dir-status-label');
+        if (label) {
+            label.textContent = '⚠️ Авто-збереження недоступне (потрібен Chrome/Edge). Використовуй вкладку "Експорт".';
+        }
+        return;
+    }
+    await tryRestoreDirHandle();
 });
