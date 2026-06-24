@@ -48,7 +48,9 @@
         "C#",
         ".NET",
         "C++",
-        "Python"
+        "Python",
+        "Java",
+        "JS"
       ]
     },
     "tools": {
@@ -74,9 +76,7 @@
         "pl": "Zasady",
         "de": "Prinzipien"
       },
-      "items": [
-        "OOP"
-      ]
+      "items": []
     },
     "other": {
       "icon": "folder",
@@ -94,7 +94,7 @@
   },
   "education": [
     {
-      "year": "2022 - 202*",
+      "year": "2022 - 2026",
       "icon": "book",
       "title": {
         "uk": "Навчання: Віницький Національний Технічний Університет",

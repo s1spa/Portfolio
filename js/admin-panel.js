@@ -102,6 +102,50 @@ function updateDirStatus() {
     }
 }
 
+async function handleResumeUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    event.target.value = '';
+
+    if (!projectDirHandle) {
+        showAlert('error', '❌ Спочатку підключи папку проєкту (кнопка "🔗 Підключити папку")');
+        return;
+    }
+    try {
+        const perm = await projectDirHandle.queryPermission({ mode: 'readwrite' });
+        if (perm !== 'granted') {
+            showAlert('error', '❌ Немає дозволу на запис у папку');
+            return;
+        }
+        const filesDir = await projectDirHandle.getDirectoryHandle('files', { create: true });
+        const fileHandle = await filesDir.getFileHandle('resume.pdf', { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(file);
+        await writable.close();
+        document.getElementById('resume-status').innerHTML = '✅ Резюме збережено: <code>files/resume.pdf</code>';
+        showAlert('success', '✅ resume.pdf збережено!');
+    } catch (e) {
+        showAlert('error', '❌ Помилка: ' + e.message);
+    }
+}
+
+async function trySaveAboutToFile() {
+    if (!projectDirHandle) return false;
+    try {
+        const perm = await projectDirHandle.queryPermission({ mode: 'readwrite' });
+        if (perm !== 'granted') return false;
+        const dataDir = await projectDirHandle.getDirectoryHandle('data');
+        const fileHandle = await dataDir.getFileHandle('about.json');
+        const writable = await fileHandle.createWritable();
+        await writable.write(JSON.stringify(aboutData, null, 2));
+        await writable.close();
+        return true;
+    } catch (e) {
+        console.warn('FS write failed:', e.message);
+        return false;
+    }
+}
+
 // Записує projectsData у файл. НЕ показує picker — тільки пише якщо handle є.
 async function trySaveProjectsToFile() {
     if (!projectDirHandle) return false;
@@ -312,6 +356,10 @@ async function fetchAboutFromServer() {
         localStorage.setItem('portfolioAbout', JSON.stringify(aboutData));
         renderAboutPreview();
         updateAboutExport();
+        // Оновити форму редагування якщо вона вже відкрита
+        if (document.getElementById('about-edit-tab')?.classList.contains('active')) {
+            renderAboutEditForm();
+        }
     } catch (_) {}
 }
 
@@ -368,6 +416,7 @@ function switchAboutTab(tab) {
     event.target.classList.add('active');
     document.getElementById(`about-${tab}-tab`).classList.add('active');
     if (tab === 'export') updateAboutExport();
+    if (tab === 'edit') renderAboutEditForm();
 }
 
 // ============================================================================
@@ -498,6 +547,187 @@ function downloadAboutJSON() {
     link.download = 'about.json';
     link.click();
     showAlert('success', '✅ Файл завантажено!');
+}
+
+// ============================================================================
+// ABOUT — ФОРМА РЕДАГУВАННЯ
+// ============================================================================
+
+function renderAboutEditForm() {
+    const { profile = {}, skills = {}, education = [], goals = {}, contacts = {} } = aboutData;
+
+    document.getElementById('about-name-uk').value = profile.name?.uk || '';
+    document.getElementById('about-name-en').value = profile.name?.en || '';
+    document.getElementById('about-age').value = profile.age || '';
+    document.getElementById('about-bio-uk').value = (profile.bio?.uk || []).join('\n');
+    document.getElementById('about-bio-en').value = (profile.bio?.en || []).join('\n');
+
+    document.getElementById('about-email').value = contacts.email || '';
+    document.getElementById('about-telegram').value = contacts.telegram || '';
+    document.getElementById('about-github').value = contacts.github || '';
+    document.getElementById('about-linkedin').value = contacts.linkedin || '';
+
+    document.getElementById('about-skills-languages').value = (skills.languages?.items || []).join('\n');
+    document.getElementById('about-skills-tools').value = (skills.tools?.items || []).join('\n');
+    document.getElementById('about-skills-principles').value = (skills.principles?.items || []).join('\n');
+    document.getElementById('about-skills-other').value = (skills.other?.items || []).join('\n');
+
+    document.getElementById('about-goal-short-uk').value = goals.short?.description?.uk || '';
+    document.getElementById('about-goal-short-en').value = goals.short?.description?.en || '';
+    document.getElementById('about-goal-long-uk').value = goals.long?.description?.uk || '';
+    document.getElementById('about-goal-long-en').value = goals.long?.description?.en || '';
+
+    renderEducationList(education);
+}
+
+function renderEducationList(education) {
+    const container = document.getElementById('about-education-list');
+    if (!container) return;
+    if (education.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:1rem;">Немає записів — натисни "Додати запис"</p>';
+        return;
+    }
+    container.innerHTML = education.map((item, i) => `
+        <div class="edu-entry" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--border-radius-sm);padding:1.2rem;margin-bottom:0.8rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;">
+                <strong style="color:var(--accent);">Запис ${i + 1}</strong>
+                <button class="btn btn-danger" style="padding:0.3rem 0.7rem;font-size:0.8rem;" onclick="removeEducationEntry(${i})">✕ Видалити</button>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Рік / Діапазон</label>
+                    <input type="text" id="edu-year-${i}" value="${item.year || ''}" placeholder="2024">
+                </div>
+                <div class="form-group full-width">
+                    <label>Назва (UA)</label>
+                    <input type="text" id="edu-title-uk-${i}" value="${(item.title?.uk || '').replace(/"/g, '&quot;')}" placeholder="Назва UA">
+                </div>
+                <div class="form-group full-width">
+                    <label>Назва (EN)</label>
+                    <input type="text" id="edu-title-en-${i}" value="${(item.title?.en || '').replace(/"/g, '&quot;')}" placeholder="Назва EN">
+                </div>
+                <div class="form-group full-width">
+                    <label>Опис (UA)</label>
+                    <textarea id="edu-desc-uk-${i}" placeholder="Опис UA">${item.description?.uk || ''}</textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label>Опис (EN)</label>
+                    <textarea id="edu-desc-en-${i}" placeholder="Опис EN">${item.description?.en || ''}</textarea>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function addEducationEntry() {
+    if (!aboutData.education) aboutData.education = [];
+    aboutData.education.push({ year: '', icon: 'book', title: { uk: '', en: '' }, description: { uk: '', en: '' } });
+    renderEducationList(aboutData.education);
+}
+
+function removeEducationEntry(index) {
+    // Зберегти поточні введені значення перед видаленням
+    _syncEducationFromForm();
+    aboutData.education.splice(index, 1);
+    renderEducationList(aboutData.education);
+}
+
+function _syncEducationFromForm() {
+    const count = document.querySelectorAll('.edu-entry').length;
+    for (let i = 0; i < count; i++) {
+        if (!aboutData.education[i]) continue;
+        aboutData.education[i].year = document.getElementById(`edu-year-${i}`)?.value || '';
+        aboutData.education[i].title = {
+            uk: document.getElementById(`edu-title-uk-${i}`)?.value || '',
+            en: document.getElementById(`edu-title-en-${i}`)?.value || '',
+        };
+        aboutData.education[i].description = {
+            uk: document.getElementById(`edu-desc-uk-${i}`)?.value || '',
+            en: document.getElementById(`edu-desc-en-${i}`)?.value || '',
+        };
+    }
+}
+
+async function saveAboutData() {
+    const parseLines = raw => raw.split('\n').map(s => s.trim()).filter(Boolean);
+
+    const eduCount = document.querySelectorAll('.edu-entry').length;
+    const education = [];
+    for (let i = 0; i < eduCount; i++) {
+        education.push({
+            year: document.getElementById(`edu-year-${i}`)?.value || '',
+            icon: aboutData.education?.[i]?.icon || 'book',
+            title: {
+                uk: document.getElementById(`edu-title-uk-${i}`)?.value || '',
+                en: document.getElementById(`edu-title-en-${i}`)?.value || '',
+                pl: aboutData.education?.[i]?.title?.pl || '',
+                de: aboutData.education?.[i]?.title?.de || '',
+            },
+            description: {
+                uk: document.getElementById(`edu-desc-uk-${i}`)?.value || '',
+                en: document.getElementById(`edu-desc-en-${i}`)?.value || '',
+                pl: aboutData.education?.[i]?.description?.pl || '',
+                de: aboutData.education?.[i]?.description?.de || '',
+            }
+        });
+    }
+
+    const nameUk = document.getElementById('about-name-uk').value;
+    const nameEn = document.getElementById('about-name-en').value;
+
+    aboutData = {
+        ...aboutData,
+        profile: {
+            ...aboutData.profile,
+            name: {
+                uk: nameUk,
+                en: nameEn,
+                pl: aboutData.profile?.name?.pl || nameEn,
+                de: aboutData.profile?.name?.de || nameEn,
+            },
+            age: parseInt(document.getElementById('about-age').value) || aboutData.profile?.age,
+            bio: {
+                uk: document.getElementById('about-bio-uk').value.split('\n').filter(s => s.trim()),
+                en: document.getElementById('about-bio-en').value.split('\n').filter(s => s.trim()),
+                pl: aboutData.profile?.bio?.pl || [],
+                de: aboutData.profile?.bio?.de || [],
+            }
+        },
+        contacts: {
+            email:    document.getElementById('about-email').value,
+            telegram: document.getElementById('about-telegram').value,
+            github:   document.getElementById('about-github').value,
+            linkedin: document.getElementById('about-linkedin').value,
+        },
+        skills: {
+            languages:  { ...aboutData.skills?.languages,  items: parseLines(document.getElementById('about-skills-languages').value) },
+            tools:      { ...aboutData.skills?.tools,      items: parseLines(document.getElementById('about-skills-tools').value) },
+            principles: { ...aboutData.skills?.principles, items: parseLines(document.getElementById('about-skills-principles').value) },
+            other:      { ...aboutData.skills?.other,      items: parseLines(document.getElementById('about-skills-other').value) },
+        },
+        goals: {
+            short: { ...aboutData.goals?.short, description: {
+                uk: document.getElementById('about-goal-short-uk').value,
+                en: document.getElementById('about-goal-short-en').value,
+                pl: aboutData.goals?.short?.description?.pl || '',
+                de: aboutData.goals?.short?.description?.de || '',
+            }},
+            long: { ...aboutData.goals?.long, description: {
+                uk: document.getElementById('about-goal-long-uk').value,
+                en: document.getElementById('about-goal-long-en').value,
+                pl: aboutData.goals?.long?.description?.pl || '',
+                de: aboutData.goals?.long?.description?.de || '',
+            }},
+        },
+        education,
+    };
+
+    localStorage.setItem('portfolioAbout', JSON.stringify(aboutData));
+    renderAboutPreview();
+    updateAboutExport();
+
+    const savedToFile = await trySaveAboutToFile();
+    showAlert('success', savedToFile ? '✅ about.json збережено!' : '✅ Збережено в браузері (папка не підключена)');
 }
 
 // ============================================================================

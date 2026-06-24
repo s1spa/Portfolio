@@ -63,6 +63,7 @@ const translations = {
             longTermGoal: "Довгострокова ціль",
             contacts: "Контакти",
             contactSubtitle: "Найшвидше — лист на пошту або повідомлення в Telegram.",
+            downloadCV: "Завантажити резюме",
             noData: "Дані профілю відсутні",
             loading: "Завантаження..."
         },
@@ -143,6 +144,7 @@ const translations = {
             longTermGoal: "Long-term goal",
             contacts: "Contacts",
             contactSubtitle: "The fastest way — email or Telegram message.",
+            downloadCV: "Download CV",
             noData: "Profile data is missing",
             loading: "Loading..."
         },
@@ -223,6 +225,7 @@ const translations = {
             longTermGoal: "Cel długoterminowy",
             contacts: "Kontakt",
             contactSubtitle: "Najszybszy sposób — e-mail lub wiadomość na Telegramie.",
+            downloadCV: "Pobierz CV",
             noData: "Brak danych profilu",
             loading: "Ładowanie..."
         },
@@ -303,6 +306,7 @@ const translations = {
             longTermGoal: "Langfristiges Ziel",
             contacts: "Kontakte",
             contactSubtitle: "Der schnellste Weg — E-Mail oder Telegram-Nachricht.",
+            downloadCV: "Lebenslauf herunterladen",
             noData: "Profildaten fehlen",
             loading: "Wird geladen..."
         },
