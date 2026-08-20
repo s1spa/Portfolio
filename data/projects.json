@@ -1,137 +1,6 @@
 {
   "projects": [
     {
-      "id": 1760828161546,
-      "featured": true,
-      "title": {
-        "uk": "ZeroTip",
-        "en": "ZeroTip",
-        "pl": "ZeroTip",
-        "de": "ZeroTip"
-      },
-      "shortDescription": {
-        "uk": "ZeroTip — інді-гра, створена за 3 дні на тему Loop, де гравець — останній кур’єр у 3077 році, що долає зруйнований космос, використовуючи перемотку часу, телепорт і тіні минулих дій, щоб доставити піцу.",
-        "en": "ZeroTip — an indie game made in 3 days for the Loop theme, where you play as the last courier of 3077, rewinding time, teleporting, and using echoes of yourself to deliver pizza through a ruined cosmos.",
-        "pl": "ZeroTip — an indie game made in 3 days for the Loop theme, where you play as the last courier of 3077, rewinding time, teleporting, and using echoes of yourself to deliver pizza through a ruined cosmos.",
-        "de": "ZeroTip — an indie game made in 3 days for the Loop theme, where you play as the last courier of 3077, rewinding time, teleporting, and using echoes of yourself to deliver pizza through a ruined cosmos."
-      },
-      "description": {
-        "uk": "ZeroTip — це інді-гра, створена всього за 3 дні під час гейм-джему.\nТема джему — “Loop” (петля), і команда реалізувала її через механіку перемотки часу.\n\nУ грі представлено два рівні:\n\n🎓 Tutorial — навчальний рівень, де гравець опановує основні механіки;\n\n🚀 Основний рівень — повноцінна місія, що вимагає концентрації, реакції й терпіння. Вона складна, але саме це розпалює азарт і змушує спробувати знову.\n\nСюжет переносить нас у 3077 рік. Світ лежить у руїнах, цивілізація зникла, але доставка — святе.\nВи — останній кур’єр служби Glovo, що мчить крізь мертвий космос, доставляючи піцу єдиному вижилому клієнту.\nНа шляху — зоряні бурі, уламки планет і викривлення часу.\nАле цього разу щось пішло не так...\n\nМеханіки, які розкривають тему Loop:\n\n⏪ Перемотка часу — повернення у ключові моменти, щоб виправити помилки.\n\n✨ Телепорт — миттєве переміщення, яке відкриває нові шляхи.\n\n🧊 Тіні минулих дій — заморожені копії себе, що допомагають пройти перешкоди, створюючи унікальну часову стратегію.\n\nZeroTip — це гра про нескінченні спроби, часові парадокси й віру в те, що навіть у найтемнішу мить доставка все одно має відбутися. 🚴‍♂️🍕💫\n\nНаша команда:\n👨‍💻 Чекалюк Діма — програміст\n👨‍💻 Авдосьєв Ілля — програміст\n🎨 Кідін Вова — 3D-дизайнер",
-        "en": "ZeroTip is an indie game created in just 3 days during a game jam.\nThe jam’s theme was “Loop”, and our team brought it to life through the time rewind mechanic.\n\nThe game features two levels:\n\n🎓 Tutorial — a training level to master the basics;\n\n🚀 Main Level — a fully playable mission that’s challenging, fast-paced, and addictive.\n\nThe story takes place in the year 3077.\nThe world has fallen apart, civilization is gone — but delivery is sacred.\nYou are the last Glovo courier, racing through dead space to deliver pizza to the last hungry client.\nStar storms, debris, and time distortions stand in your way.\nBut this time... something went wrong.\n\nThe “Loop” theme is revealed through unique mechanics:\n\n⏪ Time rewind — return to crucial moments to fix mistakes;\n\n✨ Teleportation — instant movement through space;\n\n🧊 Echoes of yourself — frozen copies that remain in time, creating strategic possibilities.\n\nZeroTip is a game about endless retries, time paradoxes, and the belief that even at the end of the universe — the delivery must be made. 🚴‍♂️🍕💫\n\nOur Team:\n👨‍💻 Dmytro Chekaliuk — Programmer\n👨‍💻 Illia Avdosiev — Programmer\n🎨 Volodymyr Kidin — 3D Designer",
-        "pl": "ZeroTip is an indie game created in just 3 days during a game jam.\nThe jam’s theme was “Loop”, and our team brought it to life through the time rewind mechanic.\n\nThe game features two levels:\n\n🎓 Tutorial — a training level to master the basics;\n\n🚀 Main Level — a fully playable mission that’s challenging, fast-paced, and addictive.\n\nThe story takes place in the year 3077.\nThe world has fallen apart, civilization is gone — but delivery is sacred.\nYou are the last Glovo courier, racing through dead space to deliver pizza to the last hungry client.\nStar storms, debris, and time distortions stand in your way.\nBut this time... something went wrong.\n\nThe “Loop” theme is revealed through unique mechanics:\n\n⏪ Time rewind — return to crucial moments to fix mistakes;\n\n✨ Teleportation — instant movement through space;\n\n🧊 Echoes of yourself — frozen copies that remain in time, creating strategic possibilities.\n\nZeroTip is a game about endless retries, time paradoxes, and the belief that even at the end of the universe — the delivery must be made. 🚴‍♂️🍕💫\n\nOur Team:\n👨‍💻 Dmytro Chekaliuk — Programmer\n👨‍💻 Illia Avdosiev — Programmer\n🎨 Volodymyr Kidin — 3D Designer",
-        "de": "ZeroTip is an indie game created in just 3 days during a game jam.\nThe jam’s theme was “Loop”, and our team brought it to life through the time rewind mechanic.\n\nThe game features two levels:\n\n🎓 Tutorial — a training level to master the basics;\n\n🚀 Main Level — a fully playable mission that’s challenging, fast-paced, and addictive.\n\nThe story takes place in the year 3077.\nThe world has fallen apart, civilization is gone — but delivery is sacred.\nYou are the last Glovo courier, racing through dead space to deliver pizza to the last hungry client.\nStar storms, debris, and time distortions stand in your way.\nBut this time... something went wrong.\n\nThe “Loop” theme is revealed through unique mechanics:\n\n⏪ Time rewind — return to crucial moments to fix mistakes;\n\n✨ Teleportation — instant movement through space;\n\n🧊 Echoes of yourself — frozen copies that remain in time, creating strategic possibilities.\n\nZeroTip is a game about endless retries, time paradoxes, and the belief that even at the end of the universe — the delivery must be made. 🚴‍♂️🍕💫\n\nOur Team:\n👨‍💻 Dmytro Chekaliuk — Programmer\n👨‍💻 Illia Avdosiev — Programmer\n🎨 Volodymyr Kidin — 3D Designer"
-      },
-      "mainImage": "images/projects/ZeroTip/main.png",
-      "icon": "game",
-      "technologies": [
-        "Unity",
-        "C#",
-        "3D",
-        "Blender"
-      ],
-      "github": "",
-      "download": "https://shramix.itch.io/zerotip",
-      "category": "games",
-      "status": "completed",
-      "videos": [
-        "https://www.youtube.com/embed/UXYsA7TgIHQ"
-      ],
-      "gallery": [
-        "images/projects/ZeroTip/1.jpg",
-        "images/projects/ZeroTip/2.jpg",
-        "images/projects/ZeroTip/3.jpg",
-        "images/projects/ZeroTip/4.jpg",
-        "images/projects/ZeroTip/tutorial.jpg"
-      ],
-      "features": []
-    },
-    {
-      "id": 1769719217677,
-      "featured": false,
-      "title": {
-        "uk": "Day Planner",
-        "en": "Day Planner",
-        "pl": "Day Planner",
-        "de": "Day Planner"
-      },
-      "shortDescription": {
-        "uk": "Day Planner — Організуй свій день! Зручний інструмент для керування завданнями та фінансами в одному місці.",
-        "en": "Day Planner — Organize your day! A convenient tool to manage tasks and finances in one place.",
-        "pl": "Day Planner — Organize your day! A convenient tool to manage tasks and finances in one place.",
-        "de": "Day Planner — Organize your day! A convenient tool to manage tasks and finances in one place."
-      },
-      "description": {
-        "uk": "Day Planner — Організуй свій день! Зручний інструмент для керування завданнями та фінансами в одному місці.\n\nПро проєкт: Це моє перше професійне завдання на першій роботі розробником. Проєкт було реалізовано за один тиждень як MVP (Minimum Viable Product). Основний фокус був зроблений на швидкості роботи та чистій архітектурі коду, що дозволяє легко масштабувати додаток у майбутньому.\n\nФункціонал:\nЗавдання: створення задач із заголовками та описами, зручне відстеження статусу через чекбокси.\nФінанси: менеджер доходів та витрат із детальною статистикою.\nСповіщення: динамічна система нагадувань про завдання та фінансові звіти протягом дня.\nАвтоматизація: результати дня автоматично мігрують у вкладку «Тиждень», а тижневі — у «Місяць».\nАналітика: перегляд успішності та фінансового стану в розрізі місяця.\n\nТехнічний стек:\nEngine & Language: Unity, C#.\nАнімації: Бібліотека DOTween для плавного UI.\nЗбереження: Використання PlayerPrefs для надійного локального зберігання даних.\nІнтерфейс: Спокійний мінімалізм, орієнтований на простоту використання.",
-        "en": "Day Planner — Organize your day! A convenient tool to manage your tasks and track your finances in one place.\n\nAbout the Project: This application was my first professional assignment at my first developer job. It was developed within one week as an MVP (Minimum Viable Product). The focus was on high performance and clean code architecture to ensure future scalability.\n\nKey Features:\nTask Management: Create tasks with titles and descriptions, and track progress with checkboxes.\nFinance Manager: Track income and expenses with integrated statistics.\nNotifications: Dynamic reminders for daily tasks and financial updates.\nData Migration: Daily results automatically transfer to the \"Week\" tab, and weekly data moves to \"Month.\"\nSuccess Tracking: Analyze your productivity and financial health throughout the month.\n\nTechnical Stack:\nEngine & Language: Unity, C#.\nAnimations: Powered by the DOTween library for a fluid UI experience.\nData Persistence: Implemented using PlayerPrefs.\nUI/UX: Minimalist and calm design, built for ease of use.",
-        "pl": "Day Planner — Organize your day! A convenient tool to manage your tasks and track your finances in one place.\n\nAbout the Project: This application was my first professional assignment at my first developer job. It was developed within one week as an MVP (Minimum Viable Product). The focus was on high performance and clean code architecture to ensure future scalability.\n\nKey Features:\nTask Management: Create tasks with titles and descriptions, and track progress with checkboxes.\nFinance Manager: Track income and expenses with integrated statistics.\nNotifications: Dynamic reminders for daily tasks and financial updates.\nData Migration: Daily results automatically transfer to the \"Week\" tab, and weekly data moves to \"Month.\"\nSuccess Tracking: Analyze your productivity and financial health throughout the month.\n\nTechnical Stack:\nEngine & Language: Unity, C#.\nAnimations: Powered by the DOTween library for a fluid UI experience.\nData Persistence: Implemented using PlayerPrefs.\nUI/UX: Minimalist and calm design, built for ease of use.",
-        "de": "Day Planner — Organize your day! A convenient tool to manage your tasks and track your finances in one place.\n\nAbout the Project: This application was my first professional assignment at my first developer job. It was developed within one week as an MVP (Minimum Viable Product). The focus was on high performance and clean code architecture to ensure future scalability.\n\nKey Features:\nTask Management: Create tasks with titles and descriptions, and track progress with checkboxes.\nFinance Manager: Track income and expenses with integrated statistics.\nNotifications: Dynamic reminders for daily tasks and financial updates.\nData Migration: Daily results automatically transfer to the \"Week\" tab, and weekly data moves to \"Month.\"\nSuccess Tracking: Analyze your productivity and financial health throughout the month.\n\nTechnical Stack:\nEngine & Language: Unity, C#.\nAnimations: Powered by the DOTween library for a fluid UI experience.\nData Persistence: Implemented using PlayerPrefs.\nUI/UX: Minimalist and calm design, built for ease of use."
-      },
-      "mainImage": "images/projects/DayPlanner/main.png",
-      "icon": "app",
-      "technologies": [
-        "Unity",
-        "C#"
-      ],
-      "github": "",
-      "download": "",
-      "category": "apps",
-      "status": "completed",
-      "videos": [],
-      "gallery": [
-        "images/projects/DayPlanner/1.jpg",
-        "images/projects/DayPlanner/2.jpg",
-        "images/projects/DayPlanner/3.jpg",
-        "images/projects/DayPlanner/4.jpg",
-        "images/projects/DayPlanner/5.jpg",
-        "images/projects/DayPlanner/0.png"
-      ],
-      "features": []
-    },
-    {
-      "id": 1769735326589,
-      "featured": true,
-      "title": {
-        "uk": "Rusty",
-        "en": "Rusty",
-        "pl": "Rusty",
-        "de": "Rusty"
-      },
-      "shortDescription": {
-        "uk": "Rusty — твій персональний помічник у світі Rust!\nВсе, що треба для виживання в Rust, в одному застосунку!",
-        "en": "Rusty — Your personal assistant for Rust!\nEverything you need to survive in Rust, in one app.",
-        "pl": "Rusty — Your personal assistant for Rust!\nEverything you need to survive in Rust, in one app.",
-        "de": "Rusty — Your personal assistant for Rust!\nEverything you need to survive in Rust, in one app."
-      },
-      "description": {
-        "uk": "Rusty — твій персональний помічник у світі Rust\n\nRusty створений для того, щоб спростити життя як новачкам, так і досвідченим гравцям. Замість того, щоб тримати сотні цифр у голові або шукати таблиці в гуглі, використовуй готові інструменти для виживання.\n\nОсновні можливості:\nКалькулятор генетики рослин: Найскладніша механіка гри тепер під контролем. Тобі не потрібно вручну рахувати коефіцієнти генів (G, Y, H, W, X), щоб отримати ідеальний результат (наприклад, GGGYYY). Просто введи дані, а калькулятор сам розрахує схему схрещування та підкаже, як правильно висадити паростки.\n\nКалькулятор рейдів: Розраховуй необхідну кількість вибухівки для будь-якої цілі. Стіни, двері, люки — застосунок точно скаже, скільки потрібно Ракет, C4 або вибухових патронів. Також він підрахує загальну кількість ресурсів (сірка, порох і т.д.), необхідних для крафту цієї вибухівки.\n\nБаза гайдів(В розробці): Все в одному місці — від порад, де знайти конкретний лут, до складних схем автоматизації та електрики.\n\nКалькулятор Скрапу (В розробці): Більше не треба гадати, чи варто нести цей хлам до переробника. Вибирай предмети зі свого інвентаря, і Rusty миттєво покаже, скільки скрапу, металу та МВК ти отримаєш на виході. Плануй свій розвиток ефективно!\n\nТехнічний стек:\n\nEngine: Unity 6 (6000.1.34f) — використання найсвіжішого довготривалого циклу підтримки двигуна.\nLanguage: C# — написання всієї математичної логіки та алгоритмів.\nUI: Unity UI (UGUI) — адаптивна верстка під мобільні пристрої.\nData Architecture: ScriptableObjects — для легкого налаштування бази даних предметів та вибухівки.\nLogic: Custom Algorithms — власна реалізація логіки схрещування рослин на основі ігрових механік Facepunch.",
-        "en": "Rusty — Your personal assistant for Rust\n\nRusty is designed to simplify gameplay for both beginners and pro players. Stop keeping hundreds of numbers in your head or searching for spreadsheets mid-raid. Use precise tools to dominate the island.\n\nKey Features:\nPlant Genetics Calculator: Take control of one of the most complex mechanics in the game. No more manual calculations of gene coefficients (G, Y, H, W, X) to get that perfect GGGYYY combo. Just enter the genes, and the app will calculate the crossbreeding scheme and explain exactly how to plant them.\n\nRaid Calculator: Plan your raids with precision. Whether it's walls, doors, or hatches, the app tells you exactly how many Rockets, C4, or Explosive Ammo you need. It also calculates the total raw materials (Sulfur, Gunpowder, etc.) required to craft the explosives.\n\nComprehensive Guides: Everything you need to know, from \"where to find specific items\" to advanced electrical circuits and automation systems.\n\nRecycle Calculator (In progress): No more guessing if that loot is worth a trip to the recycler. Select items from your inventory, and Rusty will instantly show you how much Scrap, Metal Fragments, and HQM you’ll get. Plan your progression with precision!\n\nTech Stack:\n\nEngine: Unity 6 (6000.1.34f) — utilizing the latest long-term support (LTS) engine cycle.\nLanguage: C# — implementation of all mathematical logic and core algorithms.\nUI: Unity UI (UGUI) — responsive layout and design optimized for mobile devices.\nData Architecture: ScriptableObjects — decoupled data management for easy configuration of items and explosive types.\nLogic: Custom Algorithms — proprietary implementation of plant crossbreeding logic based on Facepunch game mechanics.",
-        "pl": "Rusty — Your personal assistant for Rust\n\nRusty is designed to simplify gameplay for both beginners and pro players. Stop keeping hundreds of numbers in your head or searching for spreadsheets mid-raid. Use precise tools to dominate the island.\n\nKey Features:\nPlant Genetics Calculator: Take control of one of the most complex mechanics in the game. No more manual calculations of gene coefficients (G, Y, H, W, X) to get that perfect GGGYYY combo. Just enter the genes, and the app will calculate the crossbreeding scheme and explain exactly how to plant them.\n\nRaid Calculator: Plan your raids with precision. Whether it's walls, doors, or hatches, the app tells you exactly how many Rockets, C4, or Explosive Ammo you need. It also calculates the total raw materials (Sulfur, Gunpowder, etc.) required to craft the explosives.\n\nComprehensive Guides: Everything you need to know, from \"where to find specific items\" to advanced electrical circuits and automation systems.\n\nRecycle Calculator (In progress): No more guessing if that loot is worth a trip to the recycler. Select items from your inventory, and Rusty will instantly show you how much Scrap, Metal Fragments, and HQM you’ll get. Plan your progression with precision!\n\nTech Stack:\n\nEngine: Unity 6 (6000.1.34f) — utilizing the latest long-term support (LTS) engine cycle.\nLanguage: C# — implementation of all mathematical logic and core algorithms.\nUI: Unity UI (UGUI) — responsive layout and design optimized for mobile devices.\nData Architecture: ScriptableObjects — decoupled data management for easy configuration of items and explosive types.\nLogic: Custom Algorithms — proprietary implementation of plant crossbreeding logic based on Facepunch game mechanics.",
-        "de": "Rusty — Your personal assistant for Rust\n\nRusty is designed to simplify gameplay for both beginners and pro players. Stop keeping hundreds of numbers in your head or searching for spreadsheets mid-raid. Use precise tools to dominate the island.\n\nKey Features:\nPlant Genetics Calculator: Take control of one of the most complex mechanics in the game. No more manual calculations of gene coefficients (G, Y, H, W, X) to get that perfect GGGYYY combo. Just enter the genes, and the app will calculate the crossbreeding scheme and explain exactly how to plant them.\n\nRaid Calculator: Plan your raids with precision. Whether it's walls, doors, or hatches, the app tells you exactly how many Rockets, C4, or Explosive Ammo you need. It also calculates the total raw materials (Sulfur, Gunpowder, etc.) required to craft the explosives.\n\nComprehensive Guides: Everything you need to know, from \"where to find specific items\" to advanced electrical circuits and automation systems.\n\nRecycle Calculator (In progress): No more guessing if that loot is worth a trip to the recycler. Select items from your inventory, and Rusty will instantly show you how much Scrap, Metal Fragments, and HQM you’ll get. Plan your progression with precision!\n\nTech Stack:\n\nEngine: Unity 6 (6000.1.34f) — utilizing the latest long-term support (LTS) engine cycle.\nLanguage: C# — implementation of all mathematical logic and core algorithms.\nUI: Unity UI (UGUI) — responsive layout and design optimized for mobile devices.\nData Architecture: ScriptableObjects — decoupled data management for easy configuration of items and explosive types.\nLogic: Custom Algorithms — proprietary implementation of plant crossbreeding logic based on Facepunch game mechanics."
-      },
-      "mainImage": "images/projects/Rusty/main.png",
-      "icon": "app",
-      "technologies": [
-        "Unity",
-        "C#"
-      ],
-      "github": "",
-      "download": "",
-      "category": "apps",
-      "status": "inProgress",
-      "videos": [],
-      "gallery": [
-        "images/projects/Rusty/0.png",
-        "images/projects/Rusty/1.png",
-        "images/projects/Rusty/3.png",
-        "images/projects/Rusty/4.png",
-        "images/projects/Rusty/5.png",
-        "images/projects/Rusty/6.png",
-        "images/projects/Rusty/7.png",
-        "images/projects/Rusty/8.png"
-      ],
-      "features": []
-    },
-    {
       "id": 1769823444662,
       "featured": true,
       "title": {
@@ -209,7 +78,8 @@
         "C#",
         "BepInEx",
         "LethalLib",
-        "Unity UGUI"
+        "Unity UGUI",
+        "Reverse Engineering"
       ],
       "videos": [],
       "gallery": [
@@ -217,6 +87,196 @@
         "images/projects/LCChaosMod/зображення_2026-06-24_170536220.png",
         "images/projects/LCChaosMod/imag2e.png"
       ]
+    },
+    {
+      "id": 1787232361346,
+      "features": [],
+      "featured": false,
+      "status": "completed",
+      "category": "apps",
+      "icon": "app",
+      "github": "https://github.com/s1spa/Skinchanger-CP2077mod",
+      "download": "https://www.nexusmods.com/cyberpunk2077/mods/32426",
+      "mainImage": "images/projects/SkinChanger/1.webp",
+      "title": {
+        "uk": "Skin Changer",
+        "en": "Skin Changer",
+        "pl": "Skin Changer",
+        "de": "Skin Changer"
+      },
+      "shortDescription": {
+        "uk": "Weapon Skin Changer, мод для Cyberpunk 2077 на RedScript. Додає кнопку зміни скіна зброї прямо в інвентарі, автоматично знаходить скіни через сканування записів TweakDB за naming pattern, без ручної реєстрації. Зберігає стати, апгрейди, атачменти й рівень предмета.",
+        "en": "Weapon Skin Changer, a Cyberpunk 2077 mod written in RedScript. Adds an in-inventory skin swap button for weapons, auto-discovering skins by scanning TweakDB records via a naming pattern, no manual registration needed. Preserves stats, upgrades, attachments and item level.",
+        "pl": "Weapon Skin Changer, a Cyberpunk 2077 mod written in RedScript. Adds an in-inventory skin swap button for weapons, auto-discovering skins by scanning TweakDB records via a naming pattern, no manual registration needed. Preserves stats, upgrades, attachments and item level.",
+        "de": "Weapon Skin Changer, a Cyberpunk 2077 mod written in RedScript. Adds an in-inventory skin swap button for weapons, auto-discovering skins by scanning TweakDB records via a naming pattern, no manual registration needed. Preserves stats, upgrades, attachments and item level."
+      },
+      "description": {
+        "uk": "Weapon Skin Changer - фреймворк-мод для Cyberpunk 2077, написаний на RedScript. Додає в інвентар кнопку зміни скіна зброї, дозволяючи міняти зовнішній вигляд зброї без консольних команд і перезапуску гри.\n\nОсновна логіка:\n\n- Автоматичне виявлення скінів через сканування записів gamedataWeaponItem_Record у TweakDB за naming pattern Items.Preset_[Family]_[SkinName], без ручної реєстрації чи конфіг-файлів\n- VariantFamilyResolver фільтрує варіанти за родиною зброї, рідкістю (tier), відсутністю тегу IconicWeapon та наявністю appearanceResourceName\n- Попап зі списком доступних скінів відкривається кнопкою SKIN CHANGER при наведенні на зброю в інвентарі\n- При зміні скіна зберігаються стати, апгрейди, атачменти й рівень предмета\n\nМод підтримує кастомні іконки скінів, локалізацію та розширення сторонніми авторами: щоб додати новий скін, достатньо створити YAML-запис за встановленим naming pattern, без правок коду мода.\n\nЗалежності: Cyber Engine Tweaks, ArchiveXL, TweakXL, Codeware, RedFileSystem.\n",
+        "en": "Weapon Skin Changer is a framework mod for Cyberpunk 2077 written in RedScript. It adds an in-inventory skin swap button for weapons, letting you change a weapon's appearance without console commands or restarting the game.\n\nCore logic:\n\n- Automatic skin discovery by scanning gamedataWeaponItem_Record entries in TweakDB using the Items.Preset_[Family]_[SkinName] naming pattern, no manual registration or config files required\n- VariantFamilyResolver filters variants by weapon family, rarity tier, absence of the IconicWeapon tag, and presence of an appearanceResourceName\n- A popup with available skins opens via a SKIN CHANGER button shown on weapon hover in the inventory\n- Stats, upgrades, attachments and item level are preserved after swapping a skin\n\nThe mod supports custom skin icons, localization, and third-party extension: adding a new skin only requires a YAML record following the naming pattern, no mod code changes needed.\n\nDependencies: Cyber Engine Tweaks, ArchiveXL, TweakXL, Codeware, RedFileSystem.\n",
+        "pl": "Weapon Skin Changer is a framework mod for Cyberpunk 2077 written in RedScript. It adds an in-inventory skin swap button for weapons, letting you change a weapon's appearance without console commands or restarting the game.\n\nCore logic:\n\n- Automatic skin discovery by scanning gamedataWeaponItem_Record entries in TweakDB using the Items.Preset_[Family]_[SkinName] naming pattern, no manual registration or config files required\n- VariantFamilyResolver filters variants by weapon family, rarity tier, absence of the IconicWeapon tag, and presence of an appearanceResourceName\n- A popup with available skins opens via a SKIN CHANGER button shown on weapon hover in the inventory\n- Stats, upgrades, attachments and item level are preserved after swapping a skin\n\nThe mod supports custom skin icons, localization, and third-party extension: adding a new skin only requires a YAML record following the naming pattern, no mod code changes needed.\n\nDependencies: Cyber Engine Tweaks, ArchiveXL, TweakXL, Codeware, RedFileSystem.\n",
+        "de": "Weapon Skin Changer is a framework mod for Cyberpunk 2077 written in RedScript. It adds an in-inventory skin swap button for weapons, letting you change a weapon's appearance without console commands or restarting the game.\n\nCore logic:\n\n- Automatic skin discovery by scanning gamedataWeaponItem_Record entries in TweakDB using the Items.Preset_[Family]_[SkinName] naming pattern, no manual registration or config files required\n- VariantFamilyResolver filters variants by weapon family, rarity tier, absence of the IconicWeapon tag, and presence of an appearanceResourceName\n- A popup with available skins opens via a SKIN CHANGER button shown on weapon hover in the inventory\n- Stats, upgrades, attachments and item level are preserved after swapping a skin\n\nThe mod supports custom skin icons, localization, and third-party extension: adding a new skin only requires a YAML record following the naming pattern, no mod code changes needed.\n\nDependencies: Cyber Engine Tweaks, ArchiveXL, TweakXL, Codeware, RedFileSystem.\n"
+      },
+      "technologies": [
+        "RedScript",
+        "WolvenKit",
+        "Codewere",
+        "TweakDB",
+        "TweakXL",
+        "RedFileSystem",
+        "RedData",
+        "Cyber Engine Tweaks"
+      ],
+      "videos": [],
+      "gallery": [
+        "images/projects/SkinChanger/5.webp",
+        "images/projects/SkinChanger/4.webp",
+        "images/projects/SkinChanger/2.webp",
+        "images/projects/SkinChanger/1.gif",
+        "images/projects/SkinChanger/7.webp",
+        "images/projects/SkinChanger/6.webp",
+        "images/projects/SkinChanger/2.gif"
+      ]
+    },
+    {
+      "id": 1769735326589,
+      "featured": true,
+      "title": {
+        "uk": "Rusty",
+        "en": "Rusty",
+        "pl": "Rusty",
+        "de": "Rusty"
+      },
+      "shortDescription": {
+        "uk": "Rusty — твій персональний помічник у світі Rust!\nВсе, що треба для виживання в Rust, в одному застосунку!",
+        "en": "Rusty — Your personal assistant for Rust!\nEverything you need to survive in Rust, in one app.",
+        "pl": "Rusty — Your personal assistant for Rust!\nEverything you need to survive in Rust, in one app.",
+        "de": "Rusty — Your personal assistant for Rust!\nEverything you need to survive in Rust, in one app."
+      },
+      "description": {
+        "uk": "Rusty — твій персональний помічник у світі Rust\n\nRusty створений для того, щоб спростити життя як новачкам, так і досвідченим гравцям. Замість того, щоб тримати сотні цифр у голові або шукати таблиці в гуглі, використовуй готові інструменти для виживання.\n\nОсновні можливості:\nКалькулятор генетики рослин: Найскладніша механіка гри тепер під контролем. Тобі не потрібно вручну рахувати коефіцієнти генів (G, Y, H, W, X), щоб отримати ідеальний результат (наприклад, GGGYYY). Просто введи дані, а калькулятор сам розрахує схему схрещування та підкаже, як правильно висадити паростки.\n\nКалькулятор рейдів: Розраховуй необхідну кількість вибухівки для будь-якої цілі. Стіни, двері, люки — застосунок точно скаже, скільки потрібно Ракет, C4 або вибухових патронів. Також він підрахує загальну кількість ресурсів (сірка, порох і т.д.), необхідних для крафту цієї вибухівки.\n\nБаза гайдів(В розробці): Все в одному місці — від порад, де знайти конкретний лут, до складних схем автоматизації та електрики.\n\nКалькулятор Скрапу (В розробці): Більше не треба гадати, чи варто нести цей хлам до переробника. Вибирай предмети зі свого інвентаря, і Rusty миттєво покаже, скільки скрапу, металу та МВК ти отримаєш на виході. Плануй свій розвиток ефективно!\n\nТехнічний стек:\n\nEngine: Unity 6 (6000.1.34f) — використання найсвіжішого довготривалого циклу підтримки двигуна.\nLanguage: C# — написання всієї математичної логіки та алгоритмів.\nUI: Unity UI (UGUI) — адаптивна верстка під мобільні пристрої.\nData Architecture: ScriptableObjects — для легкого налаштування бази даних предметів та вибухівки.\nLogic: Custom Algorithms — власна реалізація логіки схрещування рослин на основі ігрових механік Facepunch.",
+        "en": "Rusty — Your personal assistant for Rust\n\nRusty is designed to simplify gameplay for both beginners and pro players. Stop keeping hundreds of numbers in your head or searching for spreadsheets mid-raid. Use precise tools to dominate the island.\n\nKey Features:\nPlant Genetics Calculator: Take control of one of the most complex mechanics in the game. No more manual calculations of gene coefficients (G, Y, H, W, X) to get that perfect GGGYYY combo. Just enter the genes, and the app will calculate the crossbreeding scheme and explain exactly how to plant them.\n\nRaid Calculator: Plan your raids with precision. Whether it's walls, doors, or hatches, the app tells you exactly how many Rockets, C4, or Explosive Ammo you need. It also calculates the total raw materials (Sulfur, Gunpowder, etc.) required to craft the explosives.\n\nComprehensive Guides: Everything you need to know, from \"where to find specific items\" to advanced electrical circuits and automation systems.\n\nRecycle Calculator (In progress): No more guessing if that loot is worth a trip to the recycler. Select items from your inventory, and Rusty will instantly show you how much Scrap, Metal Fragments, and HQM you’ll get. Plan your progression with precision!\n\nTech Stack:\n\nEngine: Unity 6 (6000.1.34f) — utilizing the latest long-term support (LTS) engine cycle.\nLanguage: C# — implementation of all mathematical logic and core algorithms.\nUI: Unity UI (UGUI) — responsive layout and design optimized for mobile devices.\nData Architecture: ScriptableObjects — decoupled data management for easy configuration of items and explosive types.\nLogic: Custom Algorithms — proprietary implementation of plant crossbreeding logic based on Facepunch game mechanics.",
+        "pl": "Rusty — Your personal assistant for Rust\n\nRusty is designed to simplify gameplay for both beginners and pro players. Stop keeping hundreds of numbers in your head or searching for spreadsheets mid-raid. Use precise tools to dominate the island.\n\nKey Features:\nPlant Genetics Calculator: Take control of one of the most complex mechanics in the game. No more manual calculations of gene coefficients (G, Y, H, W, X) to get that perfect GGGYYY combo. Just enter the genes, and the app will calculate the crossbreeding scheme and explain exactly how to plant them.\n\nRaid Calculator: Plan your raids with precision. Whether it's walls, doors, or hatches, the app tells you exactly how many Rockets, C4, or Explosive Ammo you need. It also calculates the total raw materials (Sulfur, Gunpowder, etc.) required to craft the explosives.\n\nComprehensive Guides: Everything you need to know, from \"where to find specific items\" to advanced electrical circuits and automation systems.\n\nRecycle Calculator (In progress): No more guessing if that loot is worth a trip to the recycler. Select items from your inventory, and Rusty will instantly show you how much Scrap, Metal Fragments, and HQM you’ll get. Plan your progression with precision!\n\nTech Stack:\n\nEngine: Unity 6 (6000.1.34f) — utilizing the latest long-term support (LTS) engine cycle.\nLanguage: C# — implementation of all mathematical logic and core algorithms.\nUI: Unity UI (UGUI) — responsive layout and design optimized for mobile devices.\nData Architecture: ScriptableObjects — decoupled data management for easy configuration of items and explosive types.\nLogic: Custom Algorithms — proprietary implementation of plant crossbreeding logic based on Facepunch game mechanics.",
+        "de": "Rusty — Your personal assistant for Rust\n\nRusty is designed to simplify gameplay for both beginners and pro players. Stop keeping hundreds of numbers in your head or searching for spreadsheets mid-raid. Use precise tools to dominate the island.\n\nKey Features:\nPlant Genetics Calculator: Take control of one of the most complex mechanics in the game. No more manual calculations of gene coefficients (G, Y, H, W, X) to get that perfect GGGYYY combo. Just enter the genes, and the app will calculate the crossbreeding scheme and explain exactly how to plant them.\n\nRaid Calculator: Plan your raids with precision. Whether it's walls, doors, or hatches, the app tells you exactly how many Rockets, C4, or Explosive Ammo you need. It also calculates the total raw materials (Sulfur, Gunpowder, etc.) required to craft the explosives.\n\nComprehensive Guides: Everything you need to know, from \"where to find specific items\" to advanced electrical circuits and automation systems.\n\nRecycle Calculator (In progress): No more guessing if that loot is worth a trip to the recycler. Select items from your inventory, and Rusty will instantly show you how much Scrap, Metal Fragments, and HQM you’ll get. Plan your progression with precision!\n\nTech Stack:\n\nEngine: Unity 6 (6000.1.34f) — utilizing the latest long-term support (LTS) engine cycle.\nLanguage: C# — implementation of all mathematical logic and core algorithms.\nUI: Unity UI (UGUI) — responsive layout and design optimized for mobile devices.\nData Architecture: ScriptableObjects — decoupled data management for easy configuration of items and explosive types.\nLogic: Custom Algorithms — proprietary implementation of plant crossbreeding logic based on Facepunch game mechanics."
+      },
+      "mainImage": "images/projects/Rusty/main.png",
+      "icon": "app",
+      "technologies": [
+        "Unity",
+        "C#",
+        "DOTween",
+        "Odin Inspector",
+        "UniTask"
+      ],
+      "github": "",
+      "download": "",
+      "category": "apps",
+      "status": "inProgress",
+      "videos": [],
+      "gallery": [
+        "images/projects/Rusty/0.png",
+        "images/projects/Rusty/1.png",
+        "images/projects/Rusty/3.png",
+        "images/projects/Rusty/4.png",
+        "images/projects/Rusty/5.png",
+        "images/projects/Rusty/6.png",
+        "images/projects/Rusty/7.png",
+        "images/projects/Rusty/8.png"
+      ],
+      "features": []
+    },
+    {
+      "id": 1760828161546,
+      "featured": true,
+      "title": {
+        "uk": "ZeroTip",
+        "en": "ZeroTip",
+        "pl": "ZeroTip",
+        "de": "ZeroTip"
+      },
+      "shortDescription": {
+        "uk": "ZeroTip — інді-гра, створена за 3 дні на тему Loop, де гравець — останній кур’єр у 3077 році, що долає зруйнований космос, використовуючи перемотку часу, телепорт і тіні минулих дій, щоб доставити піцу.",
+        "en": "ZeroTip — an indie game made in 3 days for the Loop theme, where you play as the last courier of 3077, rewinding time, teleporting, and using echoes of yourself to deliver pizza through a ruined cosmos.",
+        "pl": "ZeroTip — an indie game made in 3 days for the Loop theme, where you play as the last courier of 3077, rewinding time, teleporting, and using echoes of yourself to deliver pizza through a ruined cosmos.",
+        "de": "ZeroTip — an indie game made in 3 days for the Loop theme, where you play as the last courier of 3077, rewinding time, teleporting, and using echoes of yourself to deliver pizza through a ruined cosmos."
+      },
+      "description": {
+        "uk": "ZeroTip — це інді-гра, створена всього за 3 дні під час гейм-джему.\nТема джему — “Loop” (петля), і команда реалізувала її через механіку перемотки часу.\n\nУ грі представлено два рівні:\n\n🎓 Tutorial — навчальний рівень, де гравець опановує основні механіки;\n\n🚀 Основний рівень — повноцінна місія, що вимагає концентрації, реакції й терпіння. Вона складна, але саме це розпалює азарт і змушує спробувати знову.\n\nСюжет переносить нас у 3077 рік. Світ лежить у руїнах, цивілізація зникла, але доставка — святе.\nВи — останній кур’єр служби Glovo, що мчить крізь мертвий космос, доставляючи піцу єдиному вижилому клієнту.\nНа шляху — зоряні бурі, уламки планет і викривлення часу.\nАле цього разу щось пішло не так...\n\nМеханіки, які розкривають тему Loop:\n\n⏪ Перемотка часу — повернення у ключові моменти, щоб виправити помилки.\n\n✨ Телепорт — миттєве переміщення, яке відкриває нові шляхи.\n\n🧊 Тіні минулих дій — заморожені копії себе, що допомагають пройти перешкоди, створюючи унікальну часову стратегію.\n\nZeroTip — це гра про нескінченні спроби, часові парадокси й віру в те, що навіть у найтемнішу мить доставка все одно має відбутися. 🚴‍♂️🍕💫\n\nНаша команда:\n👨‍💻 Чекалюк Діма — програміст\n👨‍💻 Авдосьєв Ілля — програміст\n🎨 Кідін Вова — 3D-дизайнер",
+        "en": "ZeroTip is an indie game created in just 3 days during a game jam.\nThe jam’s theme was “Loop”, and our team brought it to life through the time rewind mechanic.\n\nThe game features two levels:\n\n🎓 Tutorial — a training level to master the basics;\n\n🚀 Main Level — a fully playable mission that’s challenging, fast-paced, and addictive.\n\nThe story takes place in the year 3077.\nThe world has fallen apart, civilization is gone — but delivery is sacred.\nYou are the last Glovo courier, racing through dead space to deliver pizza to the last hungry client.\nStar storms, debris, and time distortions stand in your way.\nBut this time... something went wrong.\n\nThe “Loop” theme is revealed through unique mechanics:\n\n⏪ Time rewind — return to crucial moments to fix mistakes;\n\n✨ Teleportation — instant movement through space;\n\n🧊 Echoes of yourself — frozen copies that remain in time, creating strategic possibilities.\n\nZeroTip is a game about endless retries, time paradoxes, and the belief that even at the end of the universe — the delivery must be made. 🚴‍♂️🍕💫\n\nOur Team:\n👨‍💻 Dmytro Chekaliuk — Programmer\n👨‍💻 Illia Avdosiev — Programmer\n🎨 Volodymyr Kidin — 3D Designer",
+        "pl": "ZeroTip is an indie game created in just 3 days during a game jam.\nThe jam’s theme was “Loop”, and our team brought it to life through the time rewind mechanic.\n\nThe game features two levels:\n\n🎓 Tutorial — a training level to master the basics;\n\n🚀 Main Level — a fully playable mission that’s challenging, fast-paced, and addictive.\n\nThe story takes place in the year 3077.\nThe world has fallen apart, civilization is gone — but delivery is sacred.\nYou are the last Glovo courier, racing through dead space to deliver pizza to the last hungry client.\nStar storms, debris, and time distortions stand in your way.\nBut this time... something went wrong.\n\nThe “Loop” theme is revealed through unique mechanics:\n\n⏪ Time rewind — return to crucial moments to fix mistakes;\n\n✨ Teleportation — instant movement through space;\n\n🧊 Echoes of yourself — frozen copies that remain in time, creating strategic possibilities.\n\nZeroTip is a game about endless retries, time paradoxes, and the belief that even at the end of the universe — the delivery must be made. 🚴‍♂️🍕💫\n\nOur Team:\n👨‍💻 Dmytro Chekaliuk — Programmer\n👨‍💻 Illia Avdosiev — Programmer\n🎨 Volodymyr Kidin — 3D Designer",
+        "de": "ZeroTip is an indie game created in just 3 days during a game jam.\nThe jam’s theme was “Loop”, and our team brought it to life through the time rewind mechanic.\n\nThe game features two levels:\n\n🎓 Tutorial — a training level to master the basics;\n\n🚀 Main Level — a fully playable mission that’s challenging, fast-paced, and addictive.\n\nThe story takes place in the year 3077.\nThe world has fallen apart, civilization is gone — but delivery is sacred.\nYou are the last Glovo courier, racing through dead space to deliver pizza to the last hungry client.\nStar storms, debris, and time distortions stand in your way.\nBut this time... something went wrong.\n\nThe “Loop” theme is revealed through unique mechanics:\n\n⏪ Time rewind — return to crucial moments to fix mistakes;\n\n✨ Teleportation — instant movement through space;\n\n🧊 Echoes of yourself — frozen copies that remain in time, creating strategic possibilities.\n\nZeroTip is a game about endless retries, time paradoxes, and the belief that even at the end of the universe — the delivery must be made. 🚴‍♂️🍕💫\n\nOur Team:\n👨‍💻 Dmytro Chekaliuk — Programmer\n👨‍💻 Illia Avdosiev — Programmer\n🎨 Volodymyr Kidin — 3D Designer"
+      },
+      "mainImage": "images/projects/ZeroTip/main.png",
+      "icon": "game",
+      "technologies": [
+        "Unity",
+        "C#",
+        "3D",
+        "Blender",
+        "URP",
+        "Shaders (HLSL)",
+        "Cinemachine"
+      ],
+      "github": "https://github.com/ShrAmix/GameJam2025June",
+      "download": "https://shramix.itch.io/zerotip",
+      "category": "games",
+      "status": "completed",
+      "videos": [
+        "https://www.youtube.com/embed/UXYsA7TgIHQ"
+      ],
+      "gallery": [
+        "images/projects/ZeroTip/1.jpg",
+        "images/projects/ZeroTip/2.jpg",
+        "images/projects/ZeroTip/3.jpg",
+        "images/projects/ZeroTip/4.jpg",
+        "images/projects/ZeroTip/tutorial.jpg"
+      ],
+      "features": []
+    },
+    {
+      "id": 1769719217677,
+      "featured": false,
+      "title": {
+        "uk": "Day Planner",
+        "en": "Day Planner",
+        "pl": "Day Planner",
+        "de": "Day Planner"
+      },
+      "shortDescription": {
+        "uk": "Day Planner — Організуй свій день! Зручний інструмент для керування завданнями та фінансами в одному місці.",
+        "en": "Day Planner — Organize your day! A convenient tool to manage tasks and finances in one place.",
+        "pl": "Day Planner — Organize your day! A convenient tool to manage tasks and finances in one place.",
+        "de": "Day Planner — Organize your day! A convenient tool to manage tasks and finances in one place."
+      },
+      "description": {
+        "uk": "Day Planner — Організуй свій день! Зручний інструмент для керування завданнями та фінансами в одному місці.\n\nПро проєкт: Це моє перше професійне завдання на першій роботі розробником. Проєкт було реалізовано за один тиждень як MVP (Minimum Viable Product). Основний фокус був зроблений на швидкості роботи та чистій архітектурі коду, що дозволяє легко масштабувати додаток у майбутньому.\n\nФункціонал:\nЗавдання: створення задач із заголовками та описами, зручне відстеження статусу через чекбокси.\nФінанси: менеджер доходів та витрат із детальною статистикою.\nСповіщення: динамічна система нагадувань про завдання та фінансові звіти протягом дня.\nАвтоматизація: результати дня автоматично мігрують у вкладку «Тиждень», а тижневі — у «Місяць».\nАналітика: перегляд успішності та фінансового стану в розрізі місяця.\n\nТехнічний стек:\nEngine & Language: Unity, C#.\nАнімації: Бібліотека DOTween для плавного UI.\nЗбереження: Використання PlayerPrefs для надійного локального зберігання даних.\nІнтерфейс: Спокійний мінімалізм, орієнтований на простоту використання.",
+        "en": "Day Planner — Organize your day! A convenient tool to manage your tasks and track your finances in one place.\n\nAbout the Project: This application was my first professional assignment at my first developer job. It was developed within one week as an MVP (Minimum Viable Product). The focus was on high performance and clean code architecture to ensure future scalability.\n\nKey Features:\nTask Management: Create tasks with titles and descriptions, and track progress with checkboxes.\nFinance Manager: Track income and expenses with integrated statistics.\nNotifications: Dynamic reminders for daily tasks and financial updates.\nData Migration: Daily results automatically transfer to the \"Week\" tab, and weekly data moves to \"Month.\"\nSuccess Tracking: Analyze your productivity and financial health throughout the month.\n\nTechnical Stack:\nEngine & Language: Unity, C#.\nAnimations: Powered by the DOTween library for a fluid UI experience.\nData Persistence: Implemented using PlayerPrefs.\nUI/UX: Minimalist and calm design, built for ease of use.",
+        "pl": "Day Planner — Organize your day! A convenient tool to manage your tasks and track your finances in one place.\n\nAbout the Project: This application was my first professional assignment at my first developer job. It was developed within one week as an MVP (Minimum Viable Product). The focus was on high performance and clean code architecture to ensure future scalability.\n\nKey Features:\nTask Management: Create tasks with titles and descriptions, and track progress with checkboxes.\nFinance Manager: Track income and expenses with integrated statistics.\nNotifications: Dynamic reminders for daily tasks and financial updates.\nData Migration: Daily results automatically transfer to the \"Week\" tab, and weekly data moves to \"Month.\"\nSuccess Tracking: Analyze your productivity and financial health throughout the month.\n\nTechnical Stack:\nEngine & Language: Unity, C#.\nAnimations: Powered by the DOTween library for a fluid UI experience.\nData Persistence: Implemented using PlayerPrefs.\nUI/UX: Minimalist and calm design, built for ease of use.",
+        "de": "Day Planner — Organize your day! A convenient tool to manage your tasks and track your finances in one place.\n\nAbout the Project: This application was my first professional assignment at my first developer job. It was developed within one week as an MVP (Minimum Viable Product). The focus was on high performance and clean code architecture to ensure future scalability.\n\nKey Features:\nTask Management: Create tasks with titles and descriptions, and track progress with checkboxes.\nFinance Manager: Track income and expenses with integrated statistics.\nNotifications: Dynamic reminders for daily tasks and financial updates.\nData Migration: Daily results automatically transfer to the \"Week\" tab, and weekly data moves to \"Month.\"\nSuccess Tracking: Analyze your productivity and financial health throughout the month.\n\nTechnical Stack:\nEngine & Language: Unity, C#.\nAnimations: Powered by the DOTween library for a fluid UI experience.\nData Persistence: Implemented using PlayerPrefs.\nUI/UX: Minimalist and calm design, built for ease of use."
+      },
+      "mainImage": "images/projects/DayPlanner/main.png",
+      "icon": "app",
+      "technologies": [
+        "Unity",
+        "C#",
+        "DOTween",
+        "Odin Inspector",
+        "UniTask",
+        "T4 Templates"
+      ],
+      "github": "",
+      "download": "",
+      "category": "apps",
+      "status": "completed",
+      "videos": [],
+      "gallery": [
+        "images/projects/DayPlanner/1.jpg",
+        "images/projects/DayPlanner/2.jpg",
+        "images/projects/DayPlanner/3.jpg",
+        "images/projects/DayPlanner/4.jpg",
+        "images/projects/DayPlanner/5.jpg",
+        "images/projects/DayPlanner/0.png"
+      ],
+      "features": []
     }
   ]
 }

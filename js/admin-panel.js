@@ -433,8 +433,8 @@ function renderProjectsList() {
             </div>`;
         return;
     }
-    container.innerHTML = projectsData.projects.map(p => `
-        <div class="project-item">
+    container.innerHTML = projectsData.projects.map((p, i) => `
+        <div class="project-item" data-project-id="${p.id}">
             <div class="project-info">
                 <h3>${p.title?.uk || p.title?.en || 'Без назви'}</h3>
                 <p>${p.shortDescription?.uk || p.description?.uk || 'Опис відсутній'}</p>
@@ -445,11 +445,33 @@ function renderProjectsList() {
                 </div>
             </div>
             <div class="project-actions">
+                <button onclick="moveProject(${p.id}, -1)" data-move="${p.id}:-1" class="btn btn-secondary" ${i === 0 ? 'disabled' : ''} title="Перемістити вгору">⬆️</button>
+                <button onclick="moveProject(${p.id}, 1)" data-move="${p.id}:1" class="btn btn-secondary" ${i === projectsData.projects.length - 1 ? 'disabled' : ''} title="Перемістити вниз">⬇️</button>
                 <button onclick="editProject(${p.id})" class="btn btn-secondary">✏️ Редагувати</button>
                 <button onclick="deleteProject(${p.id})" class="btn btn-danger">🗑️ Видалити</button>
             </div>
         </div>
     `).join('');
+}
+
+async function moveProject(id, direction) {
+    const index = projectsData.projects.findIndex(p => p.id === id);
+    const targetIndex = index + direction;
+    if (index === -1 || targetIndex < 0 || targetIndex >= projectsData.projects.length) return;
+    const [moved] = projectsData.projects.splice(index, 1);
+    projectsData.projects.splice(targetIndex, 0, moved);
+    localStorage.setItem('portfolioProjects', JSON.stringify(projectsData));
+    renderProjectsList();
+    updateProjectsExport();
+
+    const row = document.querySelector(`.project-item[data-project-id="${id}"]`);
+    if (row) {
+        row.scrollIntoView({ block: 'nearest' });
+        row.classList.add('just-moved');
+        setTimeout(() => row.classList.remove('just-moved'), 600);
+    }
+    document.querySelector(`[data-move="${id}:${direction}"]`)?.focus();
+    await trySaveProjectsToFile();
 }
 
 async function deleteProject(id) {

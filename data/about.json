@@ -50,7 +50,8 @@
         "C++",
         "Python",
         "Java",
-        "JS"
+        "JS",
+        "React"
       ]
     },
     "tools": {
@@ -65,18 +66,14 @@
         "Unity",
         "Git",
         "Visual Studio",
-        "Visual Studio Code"
+        "Visual Studio Code",
+        "Firebase",
+        "R2 Bucket",
+        "Oracle",
+        "Railway",
+        "Docker",
+        "Node.js"
       ]
-    },
-    "principles": {
-      "icon": "book",
-      "title": {
-        "uk": "Принципи",
-        "en": "Principles",
-        "pl": "Zasady",
-        "de": "Prinzipien"
-      },
-      "items": []
     },
     "other": {
       "icon": "folder",
@@ -88,11 +85,52 @@
       },
       "items": [
         "JSON",
-        "Blender"
+        "Blender",
+        "SQL",
+        "PostgreSQL",
+        "MySQL",
+        "SQLite",
+        "REST API",
+        "Markdown",
+        "WebSockets",
+        "Groq API",
+        "Gemini/OpenAI API"
       ]
     }
   },
   "education": [
+    {
+      "year": "2026",
+      "icon": "code",
+      "title": {
+        "uk": "ТОВ \"Kness\" — Інженер програміст (проходження практики)",
+        "en": "\"Kness\" LLC — Software Engineer (Internship)",
+        "pl": "\"Kness\" Sp. z o.o. — Inżynier oprogramowania (Praktyka zawodowa)",
+        "de": "\"Kness\" GmbH — Softwareentwickler (Praktikum)"
+      },
+      "description": {
+        "uk": "Проходження практики. Розробляв web-застосунок Omnidub — ШІ-сервіс закадрового перекладу відео (JS, Node.js, HTML, CSS).",
+        "en": "Internship. Worked on Omnidub — an AI video voice-over/translation web app (JS, Node.js, HTML, CSS).",
+        "pl": "Praktyka zawodowa. Pracował nad aplikacją Omnidub — webowym serwisem AI do lektorskiego tłumaczenia wideo (JS, Node.js, HTML, CSS).",
+        "de": "Praktikum. Mitgearbeitet an Omnidub — einer KI-Web-App für Video-Synchronisation/Übersetzung (JS, Node.js, HTML, CSS)."
+      }
+    },
+    {
+      "year": "2025",
+      "icon": "code",
+      "title": {
+        "uk": "ТОВ \"Infinium Game Studio\" — Інженер програміст (проходження практики)",
+        "en": "\"Infinium Game Studio\" LLC — Software Engineer (Internship)",
+        "pl": "\"Infinium Game Studio\" Sp. z o.o. — Inżynier oprogramowania (Praktyka zawodowa)",
+        "de": "\"Infinium Game Studio\" GmbH — Softwareentwickler (Praktikum)"
+      },
+      "description": {
+        "uk": "Проходження практики. Розробляв кросплатформений застосунок DayPlanner для тайм-менеджменту та фінансового обліку (Unity, C#, DoTween).",
+        "en": "Internship. Worked on DayPlanner — a cross-platform time-management and budget-tracking app (Unity, C#, DoTween).",
+        "pl": "Praktyka zawodowa. Pracował nad aplikacją DayPlanner do zarządzania czasem i budżetem (Unity, C#, DoTween).",
+        "de": "Praktikum. Mitgearbeitet an DayPlanner — einer App für Zeitmanagement und Finanzverwaltung (Unity, C#, DoTween)."
+      }
+    },
     {
       "year": "2022 - 2026",
       "icon": "book",

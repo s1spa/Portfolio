@@ -251,6 +251,11 @@ textarea::placeholder {
     flex-wrap: wrap;
 }
 
+.project-item.just-moved {
+    background: rgba(100, 200, 255, 0.12);
+    transition: background 0.6s ease;
+}
+
 
 /* ============================================================================
    5. РЕДАКТОРИ (Skills, Education, Features)
